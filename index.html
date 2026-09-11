@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIOFFREDO — AI Developer</title>
+    <meta name="description" content="GIOFFREDO — AI Developer from Indonesia. Transforming ideas into intelligent digital experiences.">
+    <meta property="og:title" content="GIOFFREDO — AI Developer">
+    <meta property="og:description" content="Transforming ideas into intelligent digital experiences.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#07080a">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2307080a'/%3E%3Cpath d='M20 82V28l30 34 30-34v54' stroke='%23e3202b' stroke-width='7' fill='none' stroke-linecap='square'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+    <script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body>
+
+    <noscript>
+        <div style="font-family: monospace; background:#07080a; color:#e9dbdd; padding:14px 20px; text-align:center; border-bottom:1px solid rgba(227,32,43,.35);">
+            GIOFFREDO // This portfolio requires JavaScript — enable it for the full experience.
+        </div>
+    </noscript>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Ambient background layers -->
+    <div class="bg-fx" aria-hidden="true"></div>
+
+    <!-- ══════════ Preloader ══════════ -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+        <div class="pre-inner">
+            <div class="pre-logo mono" aria-hidden="true"><span class="pre-caret">A</span><i>_</i></div>
+            <div class="pre-bar"><span id="preFill"></span></div>
+            <p class="pre-text mono">GIOFFREDO://SYSTEM&nbsp;BOOT&nbsp;—&nbsp;INITIALIZING&nbsp;INTERFACE<span class="pre-blink">_</span></p>
+        </div>
+    </div>
+
+    <!-- ══════════ Custom cursor ══════════ -->
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="cursor-label" id="cursorLabel"></span></div>
+
+    <!-- Scroll progress -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- ══════════ Vertical left rail (HUD dots) ══════════ -->
+    <nav class="rail rail-left" aria-label="Quick navigation">
+        <a class="rail-item is-active" href="#home" data-rail="home" aria-label="Home"><span class="rail-dot"></span><span class="rail-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg></span><span class="rail-tip mono">00 / HOME</span></a>
+        <a class="rail-item" href="#about" data-rail="about" aria-label="About"><span class="rail-dot"></span><span class="rail-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><span class="rail-tip mono">01 / ABOUT</span></a>
+        <a class="rail-item" href="#projects" data-rail="projects" aria-label="Projects"><span class="rail-dot"></span><span class="rail-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg></span><span class="rail-tip mono">04 / WORK</span></a>
+        <a class="rail-item" href="#contact" data-rail="contact" aria-label="Contact"><span class="rail-dot"></span><span class="rail-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg></span><span class="rail-tip mono">06 / CONTACT</span></a>
+    </nav>
+
+    <!-- ══════════ Vertical right strip ══════════ -->
+    <aside class="rail rail-right mono" aria-hidden="true">
+        <a href="mailto:hello@gioffredo.dev" tabindex="-1">hello@gioffredo.dev</a>
+        <span class="rail-line"></span>
+        <span>ID / 2026</span>
+    </aside>
+
+    <!-- ══════════ Navigation ══════════ -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-inner">
+            <a href="#home" class="brand" aria-label="GIOFFREDO — home">
+                <span class="brand-mark" aria-hidden="true">A</span>
+                <span class="brand-text">GIOFFREDO<span class="brand-caret">_</span></span>
+            </a>
+
+            <ul class="nav-links mono" id="navLinks">
+                <li><a href="#home" class="nav-link active"><span class="nv-i">00</span>Home</a></li>
+                <li><a href="#about" class="nav-link"><span class="nv-i">01</span>About</a></li>
+                <li><a href="#skills" class="nav-link"><span class="nv-i">02</span>Skills</a></li>
+                <li><a href="#experience" class="nav-link"><span class="nv-i">03</span>Experience</a></li>
+                <li><a href="#projects" class="nav-link"><span class="nv-i">04</span>Projects</a></li>
+                <li><a href="#archive" class="nav-link"><span class="nv-i">05</span>Archive</a></li>
+                <li><a href="#contact" class="nav-link"><span class="nv-i">06</span>Contact</a></li>
+            </ul>
+
+            <div class="nav-right">
+                <span class="nav-status mono" title="Open to freelance &amp; collaborations"><i class="dot-live"></i><span class="nav-status-txt">OPEN TO WORK</span></span>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu overlay -->
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <div class="mm-inner">
+                <p class="mm-label mono">// NAVIGATION — SELECT DESTINATION</p>
+                <ul class="mobile-links mono" id="mobileLinks">
+                    <li><a href="#home" class="m-link"><span class="m-i">00</span><span class="m-t">Home</span><span class="m-arrow">→</span></a></li>
+                    <li><a href="#about" class="m-link"><span class="m-i">01</span><span class="m-t">About</span><span class="m-arrow">→</span></a></li>
+                    <li><a href="#skills" class="m-link"><span class="m-i">02</span><span class="m-t">Skills</span><span class="m-arrow">→</span></a></li>
+                    <li><a href="#experience" class="m-link"><span class="m-i">03</span><span class="m-t">Experience</span><span class="m-arrow">→</span></a></li>
+                    <li><a href="#projects" class="m-link"><span class="m-i">04</span><span class="m-t">Projects</span><span class="m-arrow">→</span></a></li>
+                    <li><a href="#archive" class="m-link"><span class="m-i">05</span><span class="m-t">Archive</span><span class="m-arrow">→</span></a></li>
+                    <li><a href="#contact" class="m-link"><span class="m-i">06</span><span class="m-t">Contact</span><span class="m-arrow">→</span></a></li>
+                </ul>
+                <div class="mm-foot">
+                    <div class="mm-mail mono"><span class="mono-label">email</span><a href="mailto:hello@gioffredo.dev">hello@gioffredo.dev</a></div>
+                    <div class="mm-socials mono" id="mmSocials"><!-- injected --></div>
+                    <p class="mm-status mono"><i class="dot-live"></i> OPEN TO WORK — INDONESIA</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══════════ HERO ══════════ -->
+    <header class="hero" id="home">
+        <div class="hero-vignette" aria-hidden="true"></div>
+        <div class="hero-scan" aria-hidden="true"></div>
+
+        <div class="container hero-grid">
+            <!-- Copy side -->
+            <div class="hero-copy">
+                <p class="hero-kicker mono reveal" data-d="0">
+                    <i class="dot-live"></i>SYSTEM ONLINE — BASED IN INDONESIA
+                </p>
+
+                <h1 class="hero-title" aria-label="GIOFFREDO" data-split>GIOFFREDO</h1>
+
+                <p class="hero-role mono" data-split>AI DEVELOPER</p>
+
+                <p class="hero-tagline mono">Transforming ideas into digital experiences</p>
+
+                <p class="hero-desc reveal" data-d="4">
+                    I design and build intelligent software — AI products, automation systems and
+                    cinematic digital experiences — where clean engineering meets creative technology.
+                </p>
+
+                <div class="hero-actions reveal" data-d="5">
+                    <a href="#contact" class="btn btn-prime">
+                        <span class="btn-lbl">Hire Me</span>
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
+                    <a href="#projects" class="btn btn-line">
+                        <span class="btn-lbl">View Projects</span>
+                        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
+                    <span class="hero-note mono">scroll —<br>case 01</span>
+                </div>
+
+                <ul class="hero-meta mono reveal" data-d="6">
+                    <li>PYTHON</li><li>LLM SYSTEMS</li><li>AUTOMATION</li><li>REACT</li><li>WEBGL</li>
+                </ul>
+            </div>
+
+            <!-- Visual side -->
+            <div class="hero-visual reveal" data-d="2">
+                <div class="hv-frame" aria-hidden="true">
+                    <span class="cb cb-tl"></span><span class="cb cb-tr"></span>
+                    <span class="cb cb-bl"></span><span class="cb cb-br"></span>
+                </div>
+                <div class="hv-top mono">
+                    <span class="hv-node"><i class="dot-live"></i>GIOFFREDO.CORE<span class="hv-dim">—NODE_01</span></span>
+                    <span class="hv-rec mono"><i></i>LIVE</span>
+                </div>
+
+                <div class="core-stage" id="coreStage" aria-label="Interactive generative visual — drag to rotate">
+                    <!-- CSS fallback (no WebGL / offline) -->
+                    <div class="core-fallback" id="coreFallback" aria-hidden="true">
+                        <div class="cf-core"></div>
+                        <div class="cf-ring cf-r1"></div>
+                        <div class="cf-ring cf-r2"></div>
+                        <div class="cf-ring cf-r3"></div>
+                    </div>
+                    <div class="core-msg mono" id="coreMessage" hidden>⚠ WEBGL UNAVAILABLE — LOADING FALLBACK FEED</div>
+                    <button class="core-reset mono" id="coreReset" type="button" aria-label="Reset view">↺ RESET</button>
+                    <p class="core-hint mono">DRAG · ROTATE&nbsp;&nbsp;/&nbsp;&nbsp;SCROLL · ZOOM</p>
+                    <div class="core-tag mono" id="coreTag" aria-hidden="true"><span class="ct-dot"></span>CORE_FIELD — 0.4.2</div>
+                </div>
+
+                <div class="hv-bar mono">
+                    <span>FIELD://GENERATIVE—AI</span>
+                    <span class="hv-coords">X 12.443 <em>·</em> Y 121.062</span>
+                    <span class="hv-dim">[ 2026.042 ]</span>
+                </div>
+                <div class="hv-overlay" aria-hidden="true"></div>
+
+                <div class="hv-chip hv-chip-a mono" aria-hidden="true">NEURAL ENGINE<span class="hv-chip-bar"></span>ACTIVE</div>
+                <div class="hv-chip hv-chip-b mono" aria-hidden="true">RENDER <em>//</em> WEBGL</div>
+            </div>
+        </div>
+
+        <div class="hero-scroll-wrap">
+            <a href="#about" class="scroll-cue mono" aria-label="Scroll to about section">
+                <span class="sc-txt">SCROLL DOWN</span>
+                <span class="sc-mech" aria-hidden="true"><i></i><i></i></span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Marquee divider -->
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <div class="marquee-group">
+                <span>Artificial Intelligence</span><i class="m-sep">/</i>
+                <span>Machine Learning</span><i class="m-sep">/</i>
+                <span>Software Engineering</span><i class="m-sep">/</i>
+                <span>Creative Development</span><i class="m-sep">/</i>
+                <span>Automation</span><i class="m-sep">/</i>
+                <span>API Design</span><i class="m-sep">/</i>
+                <span>Interactive 3D</span><i class="m-sep">/</i>
+                <span>Problem Solving</span><i class="m-sep">/</i>
+            </div>
+            <div class="marquee-group">
+                <span>Artificial Intelligence</span><i class="m-sep">/</i>
+                <span>Machine Learning</span><i class="m-sep">/</i>
+                <span>Software Engineering</span><i class="m-sep">/</i>
+                <span>Creative Development</span><i class="m-sep">/</i>
+                <span>Automation</span><i class="m-sep">/</i>
+                <span>API Design</span><i class="m-sep">/</i>
+                <span>Interactive 3D</span><i class="m-sep">/</i>
+                <span>Problem Solving</span><i class="m-sep">/</i>
+            </div>
+        </div>
+    </div>
+
+    <main id="main">
+        <!-- ══════════ ABOUT ══════════ -->
+        <section class="section about" id="about">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="sec-meta mono">01 <i>/</i> ABOUT <i>//</i> whoami</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-pos mono">INTRO_001</span>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-main">
+                        <h2 class="sec-title about-statement reveal" data-split>
+                            I'm an AI developer turning complex problems into intelligent, elegant software.
+                        </h2>
+
+                        <div class="about-copy reveal" data-d="2">
+                            <p>
+                                For the past four years I've worked where <span class="hl">AI meets product</span> —
+                                building assistants, automation pipelines, APIs and interactive experiences
+                                that don't just demo well but survive real users.
+                            </p>
+                            <p>
+                                My work lives in the space between disciplines: language models and clean
+                                architecture, machine learning and interface design, research notebooks and
+                                production systems. I care about <span class="hl">performance, maintainability</span>
+                                and the small details that make software feel considered.
+                            </p>
+                        </div>
+
+                        <div class="about-chips reveal" data-d="3">
+                            <p class="mono lbl">// fields_of_interest</p>
+                            <div class="chips">
+                                <span class="chip">LLM Applications</span>
+                                <span class="chip">Machine Learning</span>
+                                <span class="chip">WebGL &amp; 3D</span>
+                                <span class="chip">Automation</span>
+                                <span class="chip">Web Development</span>
+                                <span class="chip">API Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="about-side reveal" data-d="2">
+                        <div class="panel hud-panel">
+                            <p class="panel-title mono"><i class="dot-live"></i>FIELD REPORT — OPERATOR</p>
+                            <dl class="hud-rows">
+                                <div class="hud-row"><dt class="mono">NAME</dt><dd>GIOFFREDO</dd></div>
+                                <div class="hud-row"><dt class="mono">ROLE</dt><dd>AI DEVELOPER</dd></div>
+                                <div class="hud-row"><dt class="mono">LOCATION</dt><dd>INDONESIA</dd></div>
+                                <div class="hud-row"><dt class="mono">FOCUS</dt><dd>AI · SOFTWARE · UX</dd></div>
+                                <div class="hud-row"><dt class="mono">STATUS</dt><dd class="ok">AVAILABLE</dd></div>
+                            </dl>
+                        </div>
+                        <div class="about-quote mono" aria-hidden="true">
+                            <span>“CODE IS MY MEDIUM —</span>
+                            <span>INTELLIGENCE, THE MATERIAL”</span>
+                        </div>
+                    </aside>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats reveal" data-d="3">
+                    <div class="stat">
+                        <span class="stat-num" data-count="4" data-suffix="+">0</span>
+                        <span class="stat-label mono">Years exploring<br>technology</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num" data-count="20" data-suffix="+">0</span>
+                        <span class="stat-label mono">Projects<br>shipped</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num" data-count="8" data-suffix="+">0</span>
+                        <span class="stat-label mono">Technologies<br>in arsenal</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-year mono">EST.</span>
+                        <span class="stat-label mono">Started coding<br>2019</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════ SKILLS / EXPERTISE ══════════ -->
+        <section class="section skills" id="skills">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="sec-meta mono">02 <i>/</i> EXPERTISE <i>//</i> technologies</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-pos mono">MODULE_002</span>
+                </div>
+
+                <h2 class="sec-title reveal" data-split>Tools of the trade</h2>
+
+                <div class="skills-grid" id="skillsGrid"><!-- injected --></div>
+            </div>
+        </section>
+
+        <!-- ══════════ EXPERIENCE ══════════ -->
+        <section class="section experience" id="experience">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="sec-meta mono">03 <i>/</i> EXPERIENCE <i>//</i> trajectory</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-pos mono">LOG_003</span>
+                </div>
+
+                <h2 class="sec-title reveal" data-split>Career trajectory</h2>
+
+                <div class="tl-cols">
+                    <div class="tl-col reveal">
+                        <p class="tl-col-title mono"><span class="tl-num">A</span>WORK</p>
+                        <div class="tl" id="tlWork"><!-- injected --></div>
+                    </div>
+                    <div class="tl-col reveal" data-d="1">
+                        <p class="tl-col-title mono"><span class="tl-num">B</span>EDUCATION</p>
+                        <div class="tl" id="tlEdu"><!-- injected --></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════ PROJECTS / SELECTED WORK ══════════ -->
+        <section class="section projects" id="projects">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="sec-meta mono">04 <i>/</i> SELECTED WORK <i>//</i> featured</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-pos mono">CASE_004</span>
+                </div>
+
+                <h2 class="sec-title reveal" data-split>Selected work</h2>
+
+                <!-- Featured project -->
+                <div class="work-featured" id="workFeatured"><!-- injected --></div>
+
+                <!-- Secondary projects -->
+                <div class="work-grid" id="workGrid"><!-- injected --></div>
+            </div>
+        </section>
+
+        <!-- ══════════ ARCHIVE ══════════ -->
+        <section class="section archive" id="archive">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="sec-meta mono">05 <i>/</i> ARCHIVE <i>//</i> repository</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-pos mono">FILES_005</span>
+                </div>
+
+                <h2 class="sec-title reveal" data-split>Digital archive</h2>
+                <p class="archive-intro mono reveal">~/gioffredo/archive <i class="a-cur">▮</i> — experiments, experiments past, experiments future…</p>
+
+                <div class="archive-panel reveal" id="archivePanel"><!-- injected --></div>
+                <div class="archive-foot mono" id="archiveFoot"><!-- injected --></div>
+            </div>
+        </section>
+
+        <!-- ══════════ CONTACT ══════════ -->
+        <section class="section contact" id="contact">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="sec-meta mono">06 <i>/</i> CONTACT <i>//</i> transmit</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-pos mono">SIGNAL_006</span>
+                </div>
+
+                <div class="contact-copy">
+                    <h2 class="contact-title reveal" aria-label="Let's build something">
+                        <span class="ct-line" data-split>LET'S BUILD</span>
+                        <span class="ct-line ct-outline" data-split>SOMETHING</span>
+                        <span class="ct-cursor mono" aria-hidden="true">_</span>
+                    </h2>
+
+                    <div class="contact-cta-row reveal" data-d="2">
+                        <a class="btn btn-prime btn-xl" href="mailto:hello@gioffredo.dev?subject=Project%20inquiry%20—%20GIOFFREDO">
+                            <span class="btn-lbl">Get in touch</span>
+                            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+                        </a>
+                        <p class="contact-note mono">RESPONSE TIME &lt; 24H — OPEN FOR FREELANCE &amp; COLLABS</p>
+                    </div>
+                </div>
+
+                <div class="contact-channels reveal" data-d="3">
+                    <!-- injected: email / github / linkedin / instagram -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ══════════ FOOTER ══════════ -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#home" class="brand" aria-label="GIOFFREDO — back to top">
+                        <span class="brand-mark" aria-hidden="true">A</span>
+                        <span class="brand-text">GIOFFREDO<span class="brand-caret">_</span></span>
+                    </a>
+                    <p class="footer-role mono">AI DEVELOPER — <span id="clock">--:--:--</span> WIB</p>
+                </div>
+                <nav class="footer-nav mono" aria-label="Footer navigation">
+                    <a href="#about">01 ABOUT</a>
+                    <a href="#skills">02 SKILLS</a>
+                    <a href="#experience">03 EXPERIENCE</a>
+                    <a href="#projects">04 PROJECTS</a>
+                    <a href="#archive">05 ARCHIVE</a>
+                </nav>
+                <div class="footer-social mono" id="footerSocial"><!-- injected --></div>
+            </div>
+
+            <div class="footer-bottom mono">
+                <p>© <span id="year">2026</span> GIOFFREDO — ALL SYSTEMS OPERATIONAL. BUILT WITH VANILLA JS — NO FRAMEWORKS.</p>
+                <button class="to-top" id="toTop" aria-label="Back to top">
+                    <span>BACK TO TOP</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project modal -->
+    <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle" aria-hidden="true">
+        <div class="modal-backdrop" data-close=""></div>
+        <div class="modal-panel">
+            <div class="modal-frame" aria-hidden="true"><span class="cb cb-tl"></span><span class="cb cb-tr"></span><span class="cb cb-bl"></span><span class="cb cb-br"></span></div>
+            <header class="modal-head mono">
+                <span class="modal-file" id="pmFile">CASE://00</span>
+                <button class="modal-close mono" id="modalClose" aria-label="Close project details">ESC <i>✕</i></button>
+            </header>
+            <div class="modal-scroll" id="modalContent"><!-- injected --></div>
+        </div>
+    </div>
+
+    <div class="toast mono" id="toast" role="status"></div>
+
+    <!-- Three.js for the interactive hero visual -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script src="script.js"></script>
+    <script type="module" src="solar-system.js"></script>
+</body>
+</html>
