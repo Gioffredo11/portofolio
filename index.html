@@ -16,8 +16,8 @@
   <link rel="stylesheet" href="style.css">
 
   <!-- Dua gambar karakter hero di-preload supaya transisi tidak sempat kosong. -->
-  <link rel="preload" as="image" href="assets/images/character-peter.jpg">
-  <link rel="preload" as="image" href="assets/images/character-spiderman-cut.png">
+  <link rel="preload" as="image" href="assets/images/character-peter.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/character-spiderman-cut.png" fetchpriority="high">
 </head>
 <body>
 
@@ -86,8 +86,8 @@
         <div class="hero-glow hero-glow--red"></div>
         <div class="hero-glow hero-glow--teal"></div>
         <div class="hero-rays" data-depth="0.08"></div>
-        <img class="hero-web hero-web--tl" src="assets/images/web.svg" alt="">
-        <img class="hero-web hero-web--r" src="assets/images/web.svg" alt="">
+        <img class="hero-web hero-web--tl" src="assets/images/web.svg" alt="" decoding="async">
+        <img class="hero-web hero-web--r" src="assets/images/web.svg" alt="" decoding="async">
         <div class="hero-planes" data-depth="0.14"><span></span><span></span><span></span></div>
         <div class="hero-scan"></div>
       </div>
@@ -114,21 +114,21 @@
             <img class="switch-img switch-img--a is-active" id="switchImgA"
                  src="assets/images/tom holland.jpeg"
                  alt="Pemuda berjaket membawa buku di koridor sekolah"
-                 width="736" height="1308" draggable="false">
+                 width="736" height="1308" draggable="false" decoding="async">
 
             <!-- IMAGE 2 — versi PNG transparan; file asli (character-spiderman.jpg)
                  tidak diubah sama sekali -->
             <img class="switch-img switch-img--b" id="switchImgB"
                  src="assets/images/character-spiderman-cut.png"
                  alt="Ilustrasi Spider-Man berkostum merah dan hitam"
-                 width="736" height="1308" draggable="false">
+                 width="736" height="1308" draggable="false" decoding="async">
 
             <!-- Salinan kanal warna: hanya tampil saat transisi (RGB split) -->
-            <span class="sw-chroma sw-chroma--r" aria-hidden="true"><img id="swChromaR" src="assets/images/character-peter.jpg" alt=""></span>
-            <span class="sw-chroma sw-chroma--b" aria-hidden="true"><img id="swChromaB" src="assets/images/character-peter.jpg" alt=""></span>
+            <span class="sw-chroma sw-chroma--r" aria-hidden="true"><img id="swChromaR" src="assets/images/character-peter.jpg" alt="" decoding="async"></span>
+            <span class="sw-chroma sw-chroma--b" aria-hidden="true"><img id="swChromaB" src="assets/images/character-peter.jpg" alt="" decoding="async"></span>
 
             <!-- Salinan glitch berkala — dipakai script.js → initGlitch() -->
-            <img class="figure-glitch" id="swGhost" src="assets/images/character-peter.jpg" alt="" aria-hidden="true">
+            <img class="figure-glitch" id="swGhost" src="assets/images/character-peter.jpg" alt="" aria-hidden="true" decoding="async">
 
             <!-- Lapisan transisi -->
             <span class="sw-noise" aria-hidden="true"></span>
@@ -215,7 +215,7 @@
       <div class="archive-viewport">
         <div class="archive-track" id="archiveTrack">
           <article class="panel" data-hover>
-            <div class="panel-art"><img src="assets/images/panel-1.svg" alt="Panel komik Git" loading="lazy"></div>
+            <div class="panel-art"><img src="assets/images/panel-1.svg" alt="Panel komik Git" loading="lazy" decoding="async"></div>
             <div class="panel-card">
               <span class="panel-index">PANEL 01 / GIT</span>
               <p>Version control with a safety net — branch, break it, roll back, repeat.</p>
@@ -223,7 +223,7 @@
           </article>
 
           <article class="panel" data-hover>
-            <div class="panel-art"><img src="assets/images/panel-2.svg" alt="Panel komik Figma" loading="lazy"></div>
+            <div class="panel-art"><img src="assets/images/panel-2.svg" alt="Panel komik Figma" loading="lazy" decoding="async"></div>
             <div class="panel-card">
               <span class="panel-index">PANEL 02 / FIGMA</span>
               <p>Interface drafts and wireframes get tested here before they become code.</p>
@@ -231,7 +231,7 @@
           </article>
 
           <article class="panel" data-hover>
-            <div class="panel-art"><img src="assets/images/panel-3.svg" alt="Panel komik Node.js" loading="lazy"></div>
+            <div class="panel-art"><img src="assets/images/panel-3.svg" alt="Panel komik Node.js" loading="lazy" decoding="async"></div>
             <div class="panel-card">
               <span class="panel-index">PANEL 03 / NODE.JS</span>
               <p>Server-side JavaScript — APIs, small services and build scripts.</p>
@@ -239,7 +239,7 @@
           </article>
 
           <article class="panel" data-hover>
-            <div class="panel-art"><img src="assets/images/panel-4.svg" alt="Panel komik Python" loading="lazy"></div>
+            <div class="panel-art"><img src="assets/images/panel-4.svg" alt="Panel komik Python" loading="lazy" decoding="async"></div>
             <div class="panel-card">
               <span class="panel-index">PANEL 04 / PYTHON</span>
               <p>Automation, data work and the occasional AI experiment.</p>
@@ -295,7 +295,7 @@
         <span class="work-ch">CH.04</span>
         <h2 class="work-title">TECH</h2>
         <em class="script work-script">stack</em>
-        <a class="work-all" href="#contact" data-hover>WORK WITH ME <img src="assets/icons/arrow.svg" alt="" width="11" height="11"></a>
+        <a class="work-all" href="#contact" data-hover>WORK WITH ME <img src="assets/icons/arrow.svg" alt="" width="11" height="11" decoding="async"></a>
       </header>
 
       <!-- Tech stack. Setiap baris: nomor · nama · dipakai untuk apa · jenisnya.
@@ -354,7 +354,7 @@
         </h2>
         <a class="contact-cta" href="mailto:hello@gioffredo.dev" data-hover>
           <span>GET IN TOUCH</span>
-          <img src="assets/icons/arrow.svg" alt="" width="14" height="14">
+          <img src="assets/icons/arrow.svg" alt="" width="14" height="14" decoding="async">
         </a>
       </div>
     </section>

@@ -1,0 +1,23 @@
+﻿# Cloudflare Pages Headers Configuration
+# Documentation: https://developers.cloudflare.com/pages/configuration/headers/
+
+# Global Security & Caching Headers
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# HTML Pages - Always check for newest version
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Static Assets - 1 year immutable cache on Cloudflare CDN edge & browser
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS & JS - 1 week cache with background revalidation
+/*.css
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+/*.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400

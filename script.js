@@ -78,7 +78,7 @@
   /* ---------------------------------------------------------- 04. PARTIKEL */
   function initParticles() {
     const canvas = $('#particles');
-    if (!canvas) return;
+    if (!canvas || reduceMotion) return;
     const ctx = canvas.getContext('2d');
     let w, h, dpr, particles = [];
 
@@ -102,7 +102,9 @@
       particles = Array.from({ length: COUNT }, make);
     };
 
+    let running = true;
     const draw = () => {
+      if (document.hidden || !running) return;
       ctx.clearRect(0, 0, w, h);
       const mx = state.mouse.x * dpr, my = state.mouse.y * dpr;
       for (const p of particles) {
