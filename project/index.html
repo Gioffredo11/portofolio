@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gioffredo Ho — Portfolio</title>
+  <meta name="description" content="Gioffredo Ho — student developer &amp; creator. A portfolio of projects, skills and experiments in technology, programming and digital development.">
+  <meta name="theme-color" content="#22263c">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+
+  <!-- Tipografi: display condensed (Anton), UI grotesque (Inter), teknis (JetBrains Mono), script (Pacifico) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Pacifico&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Dua gambar karakter hero di-preload supaya transisi tidak sempat kosong. -->
+  <link rel="preload" as="image" href="assets/images/character-peter.jpg">
+  <link rel="preload" as="image" href="assets/images/character-spiderman-cut.png">
+</head>
+<body>
+
+  <!-- Cursor kustom: cincin luar + titik merah di tengah (terlihat di video) -->
+  <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-ring"></span><span class="cursor-dot"></span></div>
+
+  <!-- Lapisan tekstur global: film grain + scanline CRT -->
+  <div class="fx-grain" aria-hidden="true"></div>
+  <div class="fx-scan" aria-hidden="true"></div>
+
+  <!-- Partikel debu & bara merah (canvas) -->
+  <canvas class="fx-particles" id="particles" aria-hidden="true"></canvas>
+
+  <!-- Filter SVG: isolasi kanal warna untuk efek RGB split / chromatic aberration
+       pada transisi karakter hero (dipakai .sw-chroma--r / .sw-chroma--b). -->
+  <svg class="sw-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="sw-chan-r" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+      </filter>
+      <filter id="sw-chan-b" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ============ PRELOADER SINGKAT (transisi sinematik) ============ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-mark">
+      <span class="loader-word">GIOFFREDO HO</span><span class="loader-dot"></span>
+    </div>
+    <div class="loader-bar"><i id="loaderBar"></i></div>
+    <span class="loader-pct" id="loaderPct">00</span>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#hero" aria-label="Gioffredo Ho — kembali ke atas">
+      <span class="brand-word">GIOFFREDO HO</span><span class="brand-dot" aria-hidden="true"></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Navigasi utama">
+      <a href="#work" class="nav-link" data-nav="work">STACK<sup>01</sup></a>
+      <a href="#manifesto" class="nav-link" data-nav="manifesto">STUDIO<sup>02</sup></a>
+      <a href="#contact" class="nav-link" data-nav="contact">CONTACT<sup>03</sup></a>
+      <span class="nav-tick" id="navTick" aria-hidden="true"></span>
+    </nav>
+
+    <div class="nav-right">
+      <span class="nav-clock" id="clock">JKT — 00:00:00</span>
+    </div>
+  </header>
+
+  <!-- ============ STRIP VERTIKAL SISI KANAN + PROGRESS SCROLL ============ -->
+  <aside class="edge" aria-hidden="true">
+    <span class="edge-label">GIOFFREDO HO — STUDENT &amp; DEVELOPER / 2026</span>
+    <span class="edge-rule"><i id="edgeProgress"></i></span>
+  </aside>
+
+  <main>
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero" id="hero">
+      <!-- Layer background -->
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-glow hero-glow--red"></div>
+        <div class="hero-glow hero-glow--teal"></div>
+        <div class="hero-rays" data-depth="0.08"></div>
+        <img class="hero-web hero-web--tl" src="assets/images/web.svg" alt="">
+        <img class="hero-web hero-web--r" src="assets/images/web.svg" alt="">
+        <div class="hero-planes" data-depth="0.14"><span></span><span></span><span></span></div>
+        <div class="hero-scan"></div>
+      </div>
+
+      <!-- Ledakan garis cahaya teal di belakang kata script "the" -->
+      <div class="hero-burst" aria-hidden="true" data-depth="0.2"><i></i><i></i><i></i></div>
+
+      <!-- Karakter: IMAGE SWITCHER interaktif (menggantikan model 3D).
+           IMAGE 1 (Peter Parker) → klik → transisi "character transformation" →
+           IMAGE 2 (Spider-Man) → klik lagi → transisi yang sama → IMAGE 1.
+           Logika & state ada di image-switcher.js, animasinya di style.css
+           (§ .figure-switch / @keyframes charOut & charIn). -->
+      <div class="hero-figure" id="figure" data-depth="0.3">
+        <div class="figure-rings" aria-hidden="true">
+          <span class="ring ring--1"></span><span class="ring ring--2"></span><span class="ring ring--3"></span>
+        </div>
+
+        <div class="figure-frame">
+          <!-- <button> asli supaya Enter/Spasi & Tab langsung jalan tanpa JS tambahan -->
+          <button class="figure-switch" id="figureSwitch" type="button"
+                  aria-label="Karakter hero — tampilkan versi Spider-Man (klik, atau tekan Enter atau Spasi)">
+
+            <!-- IMAGE 1 — tampilan default saat website pertama dibuka -->
+            <img class="switch-img switch-img--a is-active" id="switchImgA"
+                 src="assets/images/tom holland.jpeg"
+                 alt="Pemuda berjaket membawa buku di koridor sekolah"
+                 width="736" height="1308" draggable="false">
+
+            <!-- IMAGE 2 — versi PNG transparan; file asli (character-spiderman.jpg)
+                 tidak diubah sama sekali -->
+            <img class="switch-img switch-img--b" id="switchImgB"
+                 src="assets/images/character-spiderman-cut.png"
+                 alt="Ilustrasi Spider-Man berkostum merah dan hitam"
+                 width="736" height="1308" draggable="false">
+
+            <!-- Salinan kanal warna: hanya tampil saat transisi (RGB split) -->
+            <span class="sw-chroma sw-chroma--r" aria-hidden="true"><img id="swChromaR" src="assets/images/character-peter.jpg" alt=""></span>
+            <span class="sw-chroma sw-chroma--b" aria-hidden="true"><img id="swChromaB" src="assets/images/character-peter.jpg" alt=""></span>
+
+            <!-- Salinan glitch berkala — dipakai script.js → initGlitch() -->
+            <img class="figure-glitch" id="swGhost" src="assets/images/character-peter.jpg" alt="" aria-hidden="true">
+
+            <!-- Lapisan transisi -->
+            <span class="sw-noise" aria-hidden="true"></span>
+            <span class="sw-scan" aria-hidden="true"></span>
+            <span class="sw-sweep" aria-hidden="true"></span>
+            <span class="sw-flash" aria-hidden="true"></span>
+            <span class="sw-shock" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <span class="figure-rule" aria-hidden="true"></span>
+        <span class="figure-hint is-on" id="figureHint" aria-hidden="true">✦ Click or tap to transform</span>
+        <!-- Status untuk pembaca layar (perubahan gambar diumumkan) -->
+        <span class="sr-only" id="figureStatus" role="status" aria-live="polite">Menampilkan versi Peter Parker</span>
+      </div>
+
+      <!-- Judul besar + perkenalan singkat di bawahnya -->
+      <div class="hero-type">
+        <h1 class="hero-title">
+          <span class="line line--1" data-line="1"><span>PORTOFOLIO</span></span>
+          <span class="line line--2" data-line="2"><em class="script">website's</em></span>
+        </h1>
+
+        <!-- Perkenalan singkat — menggantikan blok ROLE / FOCUS / ISSUE:
+             satu blok teks (dulu tiga kolom), tepat di bawah judul.
+             Baris & paragrafnya mengikuti teks aslinya (baris kosong antar paragraf). -->
+        <div class="hero-meta">
+          <div class="hero-intro">
+            <span class="hero-intro-kicker">Welcome to my digital space</span>
+            <span class="hero-intro-name">Gioffredo Ho</span>
+
+            <p class="hero-intro-tag">Developer. Creator. Problem Solver.</p>
+
+            <p>Hello, my name is Gioffredo Ho. I am a student with a strong interest in
+            technology, programming, and digital development.</p>
+
+            <p>I enjoy exploring new ideas, learning emerging technologies, and transforming
+            concepts into meaningful digital experiences.</p>
+
+            <p>This portfolio represents my journey in technology — a collection of my
+            projects, skills, experiments, and continuous growth.</p>
+
+            <p>I believe every project is an opportunity to learn, create, and improve.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pita marquee merah (caution tape) -->
+      <div class="ribbon" id="ribbon" aria-hidden="true">
+        <div class="ribbon-track">
+          <span class="ribbon-row" data-row="a"></span>
+          <span class="ribbon-row" data-row="b"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 01 — PROLOGUE ======================= -->
+    <section class="fall" id="fall">
+      <div class="sunburst" aria-hidden="true"></div>
+      <div class="fall-holeshim" aria-hidden="true"></div>
+      <div class="fall-debris" aria-hidden="true"></div>
+      <div class="fall-planes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+      <p class="label"><span>01</span><i></i>PROLOGUE</p>
+
+      <div class="fall-inner">
+        <h2 class="fall-title">
+          <span class="fall-line"><span>DON'T</span></span>
+          <span class="fall-line fall-line--2"><span>LOOK</span></span>
+          <em class="script fall-script">down</em>
+        </h2>
+
+        <figure class="quote-card" data-reveal>
+          <blockquote>EVERY PROJECT STARTS THE SAME WAY — A CURIOUS IDEA, AN EMPTY FILE AND NO REAL CLUE HOW LONG IT WILL TAKE.</blockquote>
+          <figcaption>Field note — learning in public</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================= ARCHIVE (PANEL KOMIK) ======================= -->
+    <section class="archive" id="archive">
+      <p class="label"><span>01.1</span><i></i>ARCHIVE</p>
+
+      <div class="archive-viewport">
+        <div class="archive-track" id="archiveTrack">
+          <article class="panel" data-hover>
+            <div class="panel-art"><img src="assets/images/panel-1.svg" alt="Panel komik Git" loading="lazy"></div>
+            <div class="panel-card">
+              <span class="panel-index">PANEL 01 / GIT</span>
+              <p>Version control with a safety net — branch, break it, roll back, repeat.</p>
+            </div>
+          </article>
+
+          <article class="panel" data-hover>
+            <div class="panel-art"><img src="assets/images/panel-2.svg" alt="Panel komik Figma" loading="lazy"></div>
+            <div class="panel-card">
+              <span class="panel-index">PANEL 02 / FIGMA</span>
+              <p>Interface drafts and wireframes get tested here before they become code.</p>
+            </div>
+          </article>
+
+          <article class="panel" data-hover>
+            <div class="panel-art"><img src="assets/images/panel-3.svg" alt="Panel komik Node.js" loading="lazy"></div>
+            <div class="panel-card">
+              <span class="panel-index">PANEL 03 / NODE.JS</span>
+              <p>Server-side JavaScript — APIs, small services and build scripts.</p>
+            </div>
+          </article>
+
+          <article class="panel" data-hover>
+            <div class="panel-art"><img src="assets/images/panel-4.svg" alt="Panel komik Python" loading="lazy"></div>
+            <div class="panel-card">
+              <span class="panel-index">PANEL 04 / PYTHON</span>
+              <p>Automation, data work and the occasional AI experiment.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 02 — MANIFESTO ======================= -->
+    <section class="manifesto" id="manifesto">
+      <div class="sunburst sunburst--manifesto" aria-hidden="true"></div>
+      <div class="manifesto-planes" aria-hidden="true"><span></span><span></span><span></span></div>
+
+      <p class="label"><span>02</span><i></i>MANIFESTO</p>
+
+      <p class="statement" id="statement">
+        I'm a student, but I don't wait for a syllabus to tell me what to build — every idea
+        worth wondering about becomes a <em class="script">project</em>, and every project
+        hands me a skill I didn't have before. This is that learning made
+        <em class="script">visible</em>.
+      </p>
+
+      <div class="manifesto-aside">
+        <p data-reveal>Based in Indonesia, I spend my time around programming, technology and digital development — turning ideas that start as notes into interfaces and small experiments that actually run.</p>
+        <p data-reveal>I'm in no rush to look finished. I'd rather show the process: what I'm learning, what I break along the way, and how each project pushes the next one a little further.</p>
+      </div>
+
+      <dl class="stats">
+        <div class="stat" data-reveal>
+          <div class="stat-bar" style="--bar:#ff3b30"></div>
+          <dd class="stat-num" data-count="4" data-plus>04</dd>
+          <dt>YEARS EXPLORING TECH</dt>
+        </div>
+        <div class="stat" data-reveal>
+          <div class="stat-bar" style="--bar:#86dfd2"></div>
+          <dd class="stat-num" data-count="20" data-plus>20</dd>
+          <dt>PROJECTS SHIPPED</dt>
+        </div>
+        <div class="stat" data-reveal>
+          <div class="stat-bar" style="--bar:#7c6bff"></div>
+          <dd class="stat-num" data-count="8" data-plus>08</dd>
+          <dt>TECHNOLOGIES IN ARSENAL</dt>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ======================= TECH STACK ======================= -->
+    <section class="work" id="work">
+      <div class="sunburst sunburst--work" aria-hidden="true"></div>
+
+      <header class="work-head">
+        <span class="work-ch">CH.04</span>
+        <h2 class="work-title">TECH</h2>
+        <em class="script work-script">stack</em>
+        <a class="work-all" href="#contact" data-hover>WORK WITH ME <img src="assets/icons/arrow.svg" alt="" width="11" height="11"></a>
+      </header>
+
+      <!-- Tech stack. Setiap baris: nomor · nama · dipakai untuk apa · jenisnya.
+           Tinggal ubah teksnya kalau ada teknologi yang mau ditambah/dikurangi. -->
+      <ul class="work-list" id="workList">
+        <li class="work-row" data-hover>
+          <span class="work-idx">01</span>
+          <h3 class="work-name">HTML</h3>
+          <span class="work-meta">SEMANTIC MARKUP</span>
+          <span class="work-year">MARKUP</span>
+        </li>
+        <li class="work-row" data-hover>
+          <span class="work-idx">02</span>
+          <h3 class="work-name">CSS</h3>
+          <span class="work-meta">LAYOUT &amp; ANIMATION</span>
+          <span class="work-year">STYLING</span>
+        </li>
+        <li class="work-row" data-hover>
+          <span class="work-idx">03</span>
+          <h3 class="work-name">JavaScript</h3>
+          <span class="work-meta">INTERACTIVITY &amp; LOGIC</span>
+          <span class="work-year">LANGUAGE</span>
+        </li>
+        <li class="work-row" data-hover>
+          <span class="work-idx">04</span>
+          <h3 class="work-name">MySQL</h3>
+          <span class="work-meta">DATABASE &amp; QUERIES</span>
+          <span class="work-year">DATABASE</span>
+        </li>
+        <li class="work-row" data-hover>
+          <span class="work-idx">05</span>
+          <h3 class="work-name">Flutter</h3>
+          <span class="work-meta">CROSS-PLATFORM APPS</span>
+          <span class="work-year">FRAMEWORK</span>
+        </li>
+      </ul>
+
+      <!-- Ticker glitch "TRANSMISSION" di bawah daftar -->
+      <div class="transmission" aria-hidden="true">
+        <span class="transmission-label">≡ TRANSMISSION</span>
+        <span class="transmission-scramble" id="scramble"></span>
+      </div>
+    </section>
+
+    <!-- ======================= 03 — TRANSMISSION / CONTACT ======================= -->
+    <section class="contact" id="contact">
+      <div class="sunburst sunburst--contact" aria-hidden="true"></div>
+      <div class="contact-planes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+      <p class="label"><span>03</span><i></i>TRANSMISSION</p>
+
+      <div class="contact-inner">
+        <h2 class="contact-title">
+          <span class="contact-line"><span>LET'S MAKE</span></span>
+          <em class="script contact-script">a scene</em>
+        </h2>
+        <a class="contact-cta" href="mailto:hello@gioffredo.dev" data-hover>
+          <span>GET IN TOUCH</span>
+          <img src="assets/icons/arrow.svg" alt="" width="14" height="14">
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================= FOOTER ======================= -->
+  <footer class="footer">
+    <span>© 2026 GIOFFREDO HO</span>
+    <span class="footer-mid">CRAFTED WITH OBSESSION. RENDERED IN NOISE.</span>
+    <a href="#hero" data-hover>BACK TO TOP ↑</a>
+  </footer>
+
+  <!-- Library animasi (dengan fallback bila CDN tidak tersedia) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script defer src="script.js"></script>
+  <script defer src="image-switcher.js"></script>
+</body>
+</html>
