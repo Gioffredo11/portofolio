@@ -862,47 +862,175 @@ body.is-loaded .cursor { opacity: 1; }
   text-transform: uppercase; color: var(--cream-2); opacity: .6;
 }
 
-/* ------------------------------------------------------------------ 06. ARCHIVE */
-.archive {
-  position: relative; height: 300vh;
+/* ------------------------------------------------------------------ 06. ARCHIVE (DUAL LAYOUT) */
+.archive-section {
+  position: relative;
   background: linear-gradient(180deg, #171a28 0%, #1e2233 40%, #262b41 100%);
+  overflow: hidden;
 }
-.archive .label { position: absolute; left: var(--pad); top: clamp(80px, 12vh, 140px); z-index: 3; }
-/* Panggung 3D: perspective di viewport (titik lenyap = tengah layar), track & panel
-   tetap berada di ruang 3D (preserve-3d) supaya miring panel ditulis script.js
-   benar-benar terlihat punya kedalaman, dan kartu kutipan bisa mengambang di depan. */
-.archive-viewport {
-  position: sticky; top: 0; height: 100svh; overflow: hidden;
-  display: flex; align-items: center;
-  perspective: 1600px; perspective-origin: 50% 50%;
+
+/* ========================================================
+   DESKTOP LAYOUT (min-width: 961px)
+   ======================================================== */
+.archive-desktop {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 }
-.archive-track {
-  display: flex; gap: clamp(20px, 2.4vw, 44px); padding: 0 var(--pad);
-  will-change: transform; transform-style: preserve-3d;
+
+.archive-mobile {
+  display: none;
 }
-.panel { position: relative; flex: 0 0 auto; width: min(34vw, 460px); transform-style: preserve-3d; }
-.panel-art {
-  position: relative; aspect-ratio: 3 / 4; overflow: hidden;
-  border: 2px solid var(--cream); background: #0f1226;
-  box-shadow: 12px 14px 0 rgba(12, 15, 26, .55), 0 30px 60px rgba(0, 0, 0, .4);
+
+.archive-desktop-header {
+  position: absolute;
+  top: clamp(24px, 4.5vh, 48px);
+  left: var(--pad);
+  right: var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.archive-desktop-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.archive-desktop-hint {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: .25em;
+  color: var(--amber);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.archive-desktop-progress-track {
+  width: 110px;
+  height: 3px;
+  background: rgba(246, 242, 230, .14);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.archive-desktop-progress-bar {
+  width: 100%;
+  height: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  box-shadow: 0 0 8px var(--red);
+}
+
+.archive-desktop-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  perspective: 1600px;
+  perspective-origin: 50% 50%;
+}
+
+.archive-desktop-track {
+  display: flex;
+  gap: clamp(24px, 3.2vw, 52px);
+  padding-left: clamp(32px, 6vw, 80px);
+  padding-right: clamp(260px, 30vw, 560px);
+  will-change: transform;
+  transform-style: preserve-3d;
+  align-items: center;
+}
+
+.desktop-panel {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(28vw, 360px);
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+}
+
+.desktop-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+
+.desktop-panel-badge {
+  font-family: var(--font-m);
+  font-size: 9.5px;
+  letter-spacing: .2em;
+  font-weight: 700;
+  color: var(--cream);
+  text-transform: uppercase;
+}
+
+.desktop-panel-tag {
+  font-family: var(--font-m);
+  font-size: 8px;
+  letter-spacing: .18em;
+  color: var(--amber);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.desktop-panel-art {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  max-height: min(46vh, 390px);
+  overflow: hidden;
+  border: 2px solid var(--cream);
+  background: #0f1226;
+  box-shadow: 10px 12px 0 rgba(12, 15, 26, .55), 0 24px 48px rgba(0, 0, 0, .4);
   transition: transform .6s var(--ease), box-shadow .6s var(--ease);
 }
-/* Artwork di dalam bingkai: digeser sangat sedikit oleh script.js (parallax).
-   Tidak pakai scale supaya bingkai yang digambar di dalam artwork tidak terpotong. */
-.panel-art img { width: 100%; height: 100%; object-fit: cover; }
-/* Panel yang disorot kursor: sedikit maju + bayangan memanjang (arah miring dari JS) */
-.panel.is-tilted .panel-art { box-shadow: 18px 22px 0 rgba(12, 15, 26, .6), 0 44px 80px rgba(0, 0, 0, .55); }
-.panel:hover .panel-art { transform: translateY(-14px) rotate(-1deg); box-shadow: 16px 20px 0 rgba(12, 15, 26, .6), 0 40px 70px rgba(0, 0, 0, .5); }
-/* Kartu kutipan yang menempel menumpuk panel */
-.panel-card {
-  position: absolute; left: -22px; bottom: -26px; width: min(88%, 340px);
-  padding: 12px 14px; background: #f7f5ee; color: #12142b;
-  border: 2px solid #12142b; box-shadow: 6px 6px 0 rgba(18, 20, 43, .35);
-  z-index: 2;
-  transform: translateZ(0);   /* dinaikkan ke depan panel oleh script.js (preserve-3d) */
+
+.desktop-panel-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.panel-index { display: block; font-family: var(--font-m); font-size: 8.5px; letter-spacing: .22em; text-transform: uppercase; opacity: .7; margin-bottom: 6px; }
-.panel-card p { font-size: 11.5px; line-height: 1.5; font-weight: 500; }
+
+.desktop-panel.is-tilted .desktop-panel-art {
+  box-shadow: 16px 20px 0 rgba(12, 15, 26, .6), 0 36px 70px rgba(0, 0, 0, .55);
+}
+
+.desktop-panel:hover .desktop-panel-art {
+  transform: translateY(-8px) rotate(-1deg);
+  box-shadow: 14px 18px 0 rgba(12, 15, 26, .6), 0 32px 60px rgba(0, 0, 0, .5);
+}
+
+.desktop-panel-card {
+  position: relative;
+  margin-top: 12px;
+  width: 100%;
+  padding: 11px 15px;
+  background: #f7f5ee;
+  color: #12142b;
+  border: 2px solid #12142b;
+  box-shadow: 5px 5px 0 rgba(18, 20, 43, .4);
+  transform: translateZ(0);
+}
+
+.desktop-panel-card p {
+  font-size: 12px;
+  line-height: 1.48;
+  font-weight: 500;
+  color: #12142b;
+  margin: 0;
+}
 
 /* ------------------------------------------------------------------ 07. MANIFESTO */
 .manifesto {
@@ -1076,18 +1204,6 @@ body.is-loaded .cursor { opacity: 1; }
 .contact-cta img { filter: invert(1); }
 .contact-cta:hover { background: var(--red); transform: translateY(-3px); box-shadow: 0 14px 40px rgba(255, 59, 48, .4); }
 
-/* FOOTER */
-.footer {
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  padding: 22px var(--pad) 26px;
-  border-top: 1px solid var(--line);
-  background: #14161f;
-  font-family: var(--font-m); font-size: 9px; letter-spacing: .22em;
-  color: var(--cream-2); text-transform: uppercase;
-}
-.footer-mid { opacity: .6; }
-.footer a { opacity: .8; transition: color .3s, opacity .3s; }
-.footer a:hover { color: var(--red); opacity: 1; }
 
 /* Reveal sederhana (dipakai bila GSAP tidak tersedia / untuk elemen non-hero) */
 [data-reveal] { opacity: 0; transform: translateY(30px); filter: blur(6px); }
@@ -1229,53 +1345,159 @@ body.is-loaded .cursor { opacity: 1; }
     padding: 18px 20px;
   }
 
-  /* Archive: Native Touch Horizontal Scroll / Snap */
-  .archive {
+  /* Archive: Dedicated Mobile Layout */
+  .archive-section {
     height: auto !important;
-    padding: clamp(60px, 8vh, 100px) var(--pad);
   }
 
-  .archive .label {
-    position: static;
-    margin-bottom: 24px;
+  .archive-desktop {
+    display: none !important;
   }
 
-  .archive-viewport {
-    position: relative !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  .archive-track {
+  .archive-mobile {
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    padding: clamp(60px, 8vh, 90px) var(--pad) 44px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .archive-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .archive-mobile-hint {
+    font-family: var(--font-m);
+    font-size: 9px;
+    letter-spacing: .2em;
+    color: var(--amber);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .archive-mobile-track {
+    display: flex;
+    gap: 18px;
     overflow-x: auto;
-    padding-bottom: 24px;
+    padding: 6px 4px 18px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scroll-padding: 0 var(--pad);
-    transform: none !important;
+    scrollbar-width: thin;
+    scrollbar-color: var(--red) rgba(255, 255, 255, .08);
   }
 
-  .panel {
-    flex: 0 0 min(82vw, 360px);
+  .archive-mobile-track::-webkit-scrollbar {
+    height: 4px;
+  }
+  .archive-mobile-track::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .08);
+    border-radius: 999px;
+  }
+  .archive-mobile-track::-webkit-scrollbar-thumb {
+    background: var(--red);
+    border-radius: 999px;
+  }
+
+  .mobile-panel {
+    flex: 0 0 min(82vw, 320px);
     scroll-snap-align: center;
-    transform: none !important;
+    display: flex;
+    flex-direction: column;
+    opacity: .88;
+    transition: opacity .3s var(--ease), transform .3s var(--ease);
   }
 
-  .panel-art {
-    aspect-ratio: 4 / 5;
+  .mobile-panel.is-active {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+
+  .mobile-panel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 0 2px;
+  }
+
+  .mobile-panel-badge {
+    font-family: var(--font-m);
+    font-size: 9px;
+    letter-spacing: .18em;
+    font-weight: 700;
+    color: var(--cream);
+  }
+
+  .mobile-panel-tag {
+    font-family: var(--font-m);
+    font-size: 8px;
+    letter-spacing: .16em;
+    color: var(--dim);
+  }
+
+  .mobile-panel-art {
+    position: relative;
+    aspect-ratio: 3 / 4;
     border-radius: 6px;
     overflow: hidden;
+    border: 2px solid var(--cream);
+    background: #0f1226;
+    box-shadow: 8px 10px 0 rgba(12, 15, 26, .5), 0 16px 36px rgba(0, 0, 0, .4);
   }
 
-  .panel-card {
-    position: relative !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
+  .mobile-panel-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .mobile-panel-card {
+    position: relative;
+    width: 100%;
     margin-top: 12px;
+    padding: 12px 14px;
+    background: #f7f5ee;
+    color: #12142b;
+    border: 2px solid #12142b;
     border-radius: 6px;
+    box-shadow: 4px 4px 0 rgba(18, 20, 43, .35);
+  }
+
+  .mobile-panel-card p {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #12142b;
+    margin: 0;
+  }
+
+  .archive-mobile-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .archive-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(246, 242, 230, .25);
+    transition: background .3s var(--ease), transform .3s var(--ease);
+  }
+
+  .archive-dot.is-active {
+    background: var(--red);
+    transform: scale(1.35);
+    box-shadow: 0 0 8px var(--red);
   }
 
   /* Manifesto */
@@ -1378,7 +1600,7 @@ body.is-loaded .cursor { opacity: 1; }
     margin-top: 8px;
   }
 
-  .panel {
+  .mobile-panel {
     flex: 0 0 84vw;
   }
 
@@ -1398,23 +1620,11 @@ body.is-loaded .cursor { opacity: 1; }
     display: block;
     font-size: 9px;
   }
-
-  .footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 20px var(--pad);
-  }
-  .footer a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
 }
 
 @media (max-width: 400px) {
   .hero-title { font-size: 38px; }
-  .panel { flex: 0 0 88vw; }
+  .mobile-panel { flex: 0 0 88vw; }
   .work-row { grid-template-columns: 24px 1fr; }
   .work-year { display: none; }
 }

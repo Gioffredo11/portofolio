@@ -14,7 +14,6 @@ import Archive from './components/Archive';
 import Manifesto from './components/Manifesto';
 import TechStack from './components/TechStack';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -153,41 +152,59 @@ export default function App() {
         scrollTrigger: { trigger: '.fall', start: 'top center', end: 'bottom top', scrub: true },
       });
 
-      // ARCHIVE: horizontal scroll track with matchMedia
-      const track = document.getElementById('archiveTrack');
-      if (track) {
+      // ARCHIVE (DESKTOP): horizontal scroll track with pin
+      const desktopTrack = document.getElementById('archiveTrackDesktop');
+      const archiveSection = document.getElementById('archive');
+      const progressBar = document.getElementById('archiveProgressDesktop');
+
+      if (desktopTrack && archiveSection) {
         ScrollTrigger.matchMedia({
           '(min-width: 961px)': function () {
-            const getDistance = () => Math.max(0, track.scrollWidth - window.innerWidth + 80);
-            gsap.to(track, {
-              x: () => -getDistance(),
-              ease: 'none',
+            const getDistance = () => Math.max(0, desktopTrack.scrollWidth - window.innerWidth + 140);
+
+            const tl = gsap.timeline({
               scrollTrigger: {
-                trigger: '.archive',
+                trigger: archiveSection,
                 start: 'top top',
-                end: 'bottom bottom',
-                scrub: 0.5,
+                end: () => `+=${getDistance() + 500}`,
+                pin: true,
+                scrub: 0.7,
                 invalidateOnRefresh: true,
+                anticipatePin: 1,
               },
             });
 
-            const panelArts = document.querySelectorAll('.panel-art');
+            tl.to(desktopTrack, {
+              x: () => -getDistance(),
+              ease: 'none',
+            });
+
+            if (progressBar) {
+              tl.to(progressBar, { scaleX: 1, ease: 'none' }, 0);
+            }
+
+            const panelArts = archiveSection.querySelectorAll('.desktop-panel-art');
             panelArts.forEach((art, i) => {
               gsap.fromTo(
                 art,
-                { rotate: i % 2 ? 3 : -3, scale: 0.94 },
+                { rotate: i % 2 ? 2.5 : -2.5, scale: 0.95 },
                 {
                   rotate: 0,
                   scale: 1,
                   ease: 'none',
-                  scrollTrigger: { trigger: '.archive', start: 'top bottom', end: 'top top', scrub: true },
+                  scrollTrigger: {
+                    trigger: archiveSection,
+                    start: 'top 85%',
+                    end: 'top top',
+                    scrub: true,
+                  },
                 }
               );
             });
           },
           '(max-width: 960px)': function () {
-            gsap.set(track, { clearProps: 'all' });
-            gsap.set('.panel-art', { clearProps: 'all' });
+            if (desktopTrack) gsap.set(desktopTrack, { clearProps: 'all' });
+            gsap.set('.desktop-panel-art', { clearProps: 'all' });
           },
         });
       }
@@ -368,8 +385,6 @@ export default function App() {
         <Contact />
       </main>
 
-      {/* Footer */}
-      <Footer />
     </>
   );
 }
