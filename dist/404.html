@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 : Signal Lost | Gioffredo Ho</title>
+  <meta name="theme-color" content="#22263c">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1d2132;
+      --card: #262b41;
+      --cream: #f6f2e6;
+      --dim: #9ea4bd;
+      --red: #ff3b30;
+      --font-d: 'Anton', Impact, sans-serif;
+      --font-b: 'Inter', system-ui, sans-serif;
+      --font-m: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--font-b);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(255, 59, 48, 0.15);
+      border: 1px solid rgba(255, 59, 48, 0.4);
+      color: var(--red);
+      font-family: var(--font-m);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+    .badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--red);
+    }
+    h1 {
+      font-family: var(--font-d);
+      font-size: clamp(80px, 18vw, 180px);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      color: var(--cream);
+      text-shadow: 3px 3px 0 var(--red), -2px -2px 0 rgba(134, 223, 210, 0.4);
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--dim);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.5;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--red);
+      color: #fff;
+      font-family: var(--font-m);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      background: #e02d24;
+      box-shadow: 0 8px 24px rgba(255, 59, 48, 0.35);
+    }
+  </style>
+</head>
+<body>
+  <div class="badge">SIGNAL INTERRUPTED // ERROR 404</div>
+  <h1>404</h1>
+  <p>The coordinates you entered don't exist in this universe. Head back to the main timeline.</p>
+  <a href="/" class="btn">
+    <span>RETURN TO BASE</span>
+    <span>&rarr;</span>
+  </a>
+</body>
+</html>

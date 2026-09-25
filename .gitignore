@@ -1,6 +1,4 @@
 .wrangler
 node_modules
-dist
-dist-ssr
 .DS_Store
 Thumbs.db

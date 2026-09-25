@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 900" fill="none" role="img" aria-label="Sosok bertudung dengan mask menyala">
+  <defs>
+    <!-- Kain hoodie: hangat di kiri (rim light merah), mendingin ke kanan (rim teal) -->
+    <linearGradient id="hoodie" x1="120" y1="120" x2="560" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#efe7d8"/>
+      <stop offset="30%" stop-color="#d3ccc0"/>
+      <stop offset="62%" stop-color="#a49f97"/>
+      <stop offset="100%" stop-color="#6a6764"/>
+    </linearGradient>
+    <linearGradient id="hoodShade" x1="320" y1="560" x2="320" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#101018" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#101018" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hoodInner" x1="320" y1="150" x2="320" y2="580" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#33333f"/>
+      <stop offset="55%" stop-color="#191922"/>
+      <stop offset="100%" stop-color="#0a0a0f"/>
+    </linearGradient>
+    <radialGradient id="faceShade" cx="50%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#282833"/>
+      <stop offset="68%" stop-color="#12121a"/>
+      <stop offset="100%" stop-color="#08080c"/>
+    </radialGradient>
+    <linearGradient id="maskGlow" x1="200" y1="190" x2="440" y2="560" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff2f4f" stop-opacity=".2"/>
+      <stop offset="100%" stop-color="#ff2f4f" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="eye" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="72%" stop-color="#f2f6ff"/>
+      <stop offset="100%" stop-color="#c6d4e8"/>
+    </radialGradient>
+    <linearGradient id="chestSpider" x1="320" y1="640" x2="320" y2="770" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff4141"/>
+      <stop offset="100%" stop-color="#bd1a22"/>
+    </linearGradient>
+    <filter id="eyeGlow" x="-90%" y="-90%" width="280%" height="280%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="faceClip">
+      <path d="M320 182c60 0 92 58 96 140 4 90-24 180-60 234h-72c-36-54-64-144-60-234 4-82 36-140 96-140Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- ================= BAHU / BADAN ================= -->
+  <g class="fig-body">
+    <path d="M40 900c8-146 84-252 182-302h196c98 50 174 156 182 302H40Z" fill="url(#hoodie)"/>
+    <path d="M40 900c8-146 84-252 182-302h196c98 50 174 156 182 302H40Z" fill="url(#hoodShade)"/>
+    <!-- jahitan bahu + lipatan kain -->
+    <path d="M206 606c26 88 34 190 30 294M434 606c-26 88-34 190-30 294" stroke="#000" stroke-opacity=".16" stroke-width="3"/>
+    <path d="M120 760c60 26 130 40 200 40s140-14 200-40" stroke="#000" stroke-opacity=".1" stroke-width="3"/>
+    <!-- ritsleting + tarikan -->
+    <path d="M320 618v282" stroke="#e8c98a" stroke-opacity=".7" stroke-width="2" stroke-dasharray="7 10"/>
+    <path d="M320 706v36" stroke="#e8c98a" stroke-opacity=".85" stroke-width="5" stroke-linecap="round"/>
+    <!-- kantong kanguru -->
+    <path d="M214 812c34 44 58 62 106 62s72-18 106-62" stroke="#000" stroke-opacity=".18" stroke-width="4" fill="none"/>
+    <!-- patch merah khas jaket Miles -->
+    <path d="M176 706l42-18 18 46-42 16z" fill="#e8202c" opacity=".9"/>
+    <path d="M464 706l-42-18-18 46 42 16z" fill="#e8202c" opacity=".9"/>
+    <path d="M252 624l20-9 11 24-20 9z" fill="#e8202c" opacity=".65"/>
+  </g>
+
+  <!-- ================= HOOD ================= -->
+  <g class="fig-hood">
+    <path d="M320 92c78 0 126 48 142 118 12 52 24 112 38 178 14 68 26 156 30 260H110c4-104 16-192 30-260 14-66 26-126 38-178C194 140 242 92 320 92Z" fill="url(#hoodie)"/>
+    <!-- bayangan kap ke dada -->
+    <path d="M110 648l4-48c6-80 16-150 26-202 14-68 28-134 42-192 16-68 64-114 138-114s122 46 138 114c14 58 28 124 42 192 10 52 20 122 26 202l4 48H110Z" fill="url(#hoodShade)" opacity=".62"/>
+    <!-- bukaan dalam hood -->
+    <path d="M320 158c68 0 108 64 112 160 4 102-30 198-70 252h-84c-40-54-74-150-70-252 4-96 44-160 112-160Z" fill="url(#hoodInner)"/>
+    <!-- garis tepi dalam hood (highlight krem tipis) -->
+    <path d="M320 158c68 0 108 64 112 160 4 102-30 198-70 252h-84c-40-54-74-150-70-252 4-96 44-160 112-160Z" stroke="#f6f2e6" stroke-opacity=".28" stroke-width="2"/>
+    <!-- rim light kiri (merah) & kanan (teal) -->
+    <path d="M198 190c-22 42-34 116-32 200 2 92 12 186 34 250" stroke="#ff6a5a" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/>
+    <path d="M442 194c20 44 30 120 28 202-2 92-10 184-30 246" stroke="#86dfd2" stroke-opacity=".3" stroke-width="4" stroke-linecap="round"/>
+    <!-- jahitan kap -->
+    <path d="M232 214c56-54 120-54 176 0" stroke="#000" stroke-opacity=".18" stroke-width="3"/>
+    <path d="M138 470c38 26 84 40 138 40" stroke="#fff" stroke-opacity=".12" stroke-width="3"/>
+  </g>
+
+  <!-- ================= MASK / WAJAH ================= -->
+  <g class="fig-face">
+    <path d="M320 182c60 0 92 58 96 140 4 90-24 180-60 234h-72c-36-54-64-144-60-234 4-82 36-140 96-140Z" fill="url(#faceShade)"/>
+    <g clip-path="url(#faceClip)">
+      <!-- pola sarang laba-laba merah pada mask -->
+      <g stroke="#ff3b30" stroke-opacity=".9" stroke-width="2.4" filter="url(#softGlow)">
+        <path d="M320 366V182M320 366l76-100M320 366l104 32M320 366l64 156M320 366l-64 156M320 366l-104 32M320 366l-76-100"/>
+        <ellipse cx="320" cy="366" rx="32" ry="50"/>
+        <ellipse cx="320" cy="366" rx="60" ry="94"/>
+        <ellipse cx="320" cy="366" rx="90" ry="140"/>
+      </g>
+      <path d="M320 366c-12 22-16 40-6 52" stroke="#000" stroke-opacity=".5" stroke-width="3"/>
+    </g>
+
+    <!-- mata menyala -->
+    <g class="fig-eyes" filter="url(#eyeGlow)">
+      <path d="M232 288c34-6 72 12 86 42-19 25-51 36-76 30-15-11-19-45-10-72Z" fill="url(#eye)"/>
+      <path d="M408 288c-34-6-72 12-86 42 19 25 51 36 76 30 15-11 19-45 10-72Z" fill="url(#eye)"/>
+      <path d="M232 288c34-6 72 12 86 42-19 25-51 36-76 30-15-11-19-45-10-72Z" stroke="#ff2f3f" stroke-width="3" fill="none"/>
+      <path d="M408 288c-34-6-72 12-86 42 19 25 51 36 76 30 15-11 19-45 10-72Z" stroke="#ff2f3f" stroke-width="3" fill="none"/>
+    </g>
+    <path d="M320 182c60 0 92 58 96 140 4 90-24 180-60 234h-72c-36-54-64-144-60-234 4-82 36-140 96-140Z" fill="url(#maskGlow)" style="mix-blend-mode:screen"/>
+  </g>
+
+  <!-- ================= LAMBANG LABI-LABA DI DADA ================= -->
+  <g class="fig-emblem">
+    <path d="M320 656c22 0 34 26 34 58s-14 52-34 52-34-22-34-52 12-58 34-58Z" fill="url(#chestSpider)"/>
+    <circle cx="320" cy="646" r="13" fill="url(#chestSpider)"/>
+    <g stroke="#d81f2c" stroke-width="11" stroke-linecap="round">
+      <path d="M300 666c-34-22-62-30-96-30M296 684c-38-10-70-6-104 6M296 702c-38 6-68 20-92 44M300 718c-32 18-54 38-66 62"/>
+      <path d="M340 666c34-22 62-30 96-30M344 684c38-10 70-6 104 6M344 702c38 6 68 20 92 44M340 718c32 18 54 38 66 62"/>
+    </g>
+  </g>
+</svg>
