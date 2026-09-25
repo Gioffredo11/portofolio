@@ -11,10 +11,36 @@ export default function CustomCursor() {
     const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     const smooth = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     let rafId = null;
+    let isTicking = false;
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    const loop = () => {
+      smooth.x = lerp(smooth.x, mouse.x, 0.22);
+      smooth.y = lerp(smooth.y, mouse.y, 0.22);
+      cursor.style.transform = `translate3d(${smooth.x.toFixed(1)}px, ${smooth.y.toFixed(1)}px, 0)`;
+
+      const dx = Math.abs(mouse.x - smooth.x);
+      const dy = Math.abs(mouse.y - smooth.y);
+      if (dx < 0.15 && dy < 0.15) {
+        isTicking = false;
+        rafId = null;
+        return;
+      }
+      rafId = requestAnimationFrame(loop);
+    };
+
+    const wake = () => {
+      if (!isTicking) {
+        isTicking = true;
+        rafId = requestAnimationFrame(loop);
+      }
+    };
 
     const onMouseMove = (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      wake();
     };
 
     const onMouseOver = (e) => {
@@ -29,19 +55,10 @@ export default function CustomCursor() {
       }
     };
 
-    const lerp = (a, b, t) => a + (b - a) * t;
-
-    const loop = () => {
-      smooth.x = lerp(smooth.x, mouse.x, 0.18);
-      smooth.y = lerp(smooth.y, mouse.y, 0.18);
-      cursor.style.transform = `translate3d(${smooth.x}px, ${smooth.y}px, 0)`;
-      rafId = requestAnimationFrame(loop);
-    };
-
     document.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseover', onMouseOver, { passive: true });
     document.addEventListener('mouseout', onMouseOut, { passive: true });
-    rafId = requestAnimationFrame(loop);
+    wake();
 
     return () => {
       document.removeEventListener('mousemove', onMouseMove);

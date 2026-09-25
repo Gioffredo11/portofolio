@@ -22,27 +22,28 @@ export default function App() {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    // 1. Lenis Smooth Scroll
+    // 1. Lenis Smooth Scroll (Optimized: native touch on mobile, synced ticker on desktop)
     let lenis = null;
-    let rafId = null;
-    if (!reduceMotion) {
+    let tickerCb = null;
+    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+    if (!reduceMotion && !isTouch) {
       lenis = new Lenis({
-        duration: 1.15,
-        lerp: 0.09,
+        duration: 1.1,
+        lerp: 0.1,
         smoothWheel: true,
         wheelMultiplier: 1,
+        syncTouch: false,
       });
       window.__lenis = lenis;
 
-      lenis.on('scroll', () => {
-        ScrollTrigger.update();
-      });
+      lenis.on('scroll', ScrollTrigger.update);
 
-      const onRaf = (time) => {
-        lenis.raf(time);
-        rafId = requestAnimationFrame(onRaf);
+      tickerCb = (time) => {
+        lenis.raf(time * 1000);
       };
-      rafId = requestAnimationFrame(onRaf);
+      gsap.ticker.add(tickerCb);
+      gsap.ticker.lagSmoothing(0);
     }
 
     // 2. GSAP Animations in a gsap.context for clean lifecycle
@@ -103,8 +104,10 @@ export default function App() {
         },
       });
 
-      // Layer [data-depth]
+      // Layer [data-depth] (Batched single rAF listener for all depth elements)
       const depthElements = document.querySelectorAll('[data-depth]');
+      const depthQuickMap = [];
+
       depthElements.forEach((el) => {
         const depth = parseFloat(el.dataset.depth || '0.2');
         gsap.to(el, {
@@ -114,14 +117,28 @@ export default function App() {
         });
 
         if (hasFinePointer) {
-          const quick = gsap.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' });
-          const onMouseMove = (e) => {
-            const nx = (e.clientX / window.innerWidth - 0.5) * depth * 90;
-            quick(nx);
-          };
-          window.addEventListener('mousemove', onMouseMove, { passive: true });
+          depthQuickMap.push({
+            quick: gsap.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' }),
+            depth,
+          });
         }
       });
+
+      let mouseMoveHandler = null;
+      if (hasFinePointer && depthQuickMap.length > 0) {
+        let mouseRaf = 0;
+        mouseMoveHandler = (e) => {
+          if (mouseRaf) return;
+          mouseRaf = requestAnimationFrame(() => {
+            mouseRaf = 0;
+            const normX = e.clientX / window.innerWidth - 0.5;
+            depthQuickMap.forEach(({ quick, depth }) => {
+              quick(normX * depth * 90);
+            });
+          });
+        };
+        window.addEventListener('mousemove', mouseMoveHandler, { passive: true });
+      }
 
       // PROLOGUE
       gsap.from('.fall-line > span', {
@@ -350,7 +367,9 @@ export default function App() {
 
     return () => {
       ctx.revert();
-      if (rafId) cancelAnimationFrame(rafId);
+      clearTimeout(fallbackTimer);
+      document.removeEventListener('arachne:ready', onReady);
+      if (tickerCb) gsap.ticker.remove(tickerCb);
       if (lenis) {
         lenis.destroy();
         window.__lenis = null;

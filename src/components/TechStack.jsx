@@ -21,6 +21,8 @@ export default function TechStack() {
     if (!rows.length) return;
 
     let raf = null;
+    let isObserving = false;
+
     const update = () => {
       raf = null;
       const mid = window.innerHeight / 2;
@@ -46,11 +48,31 @@ export default function TechStack() {
       if (!raf) raf = requestAnimationFrame(update);
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!isObserving) {
+            isObserving = true;
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll, { passive: true });
+            update();
+          }
+        } else {
+          if (isObserving) {
+            isObserving = false;
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', onScroll);
+            if (raf) cancelAnimationFrame(raf);
+          }
+        }
+      },
+      { rootMargin: '100px 0px 100px 0px' }
+    );
+
+    observer.observe(section);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       if (raf) cancelAnimationFrame(raf);

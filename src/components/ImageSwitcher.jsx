@@ -10,8 +10,8 @@ export default function ImageSwitcher() {
   const [hintDismissed, setHintDismissed] = useState(false);
   const [chromaSrc, setChromaSrc] = useState(IMG_PETER);
   const [ghostSrc, setGhostSrc] = useState(IMG_PETER);
-  const [isGlitching, setIsGlitching] = useState(false);
 
+  const frameRef = useRef(null);
   const buttonRef = useRef(null);
   const busyRef = useRef(false);
   const glitchTimerRef = useRef(null);
@@ -27,7 +27,7 @@ export default function ImageSwitcher() {
     });
   }, []);
 
-  // Periodic Glitch
+  // Periodic Glitch (direct DOM class, zero React re-renders)
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) return;
@@ -36,11 +36,11 @@ export default function ImageSwitcher() {
 
     const scheduleGlitch = (delay) => {
       glitchTimerRef.current = setTimeout(() => {
-        setIsGlitching(true);
+        if (frameRef.current) frameRef.current.classList.add('is-glitch');
         document.dispatchEvent(new CustomEvent('arachne:glitch'));
         setTimeout(() => {
-          setIsGlitching(false);
-          scheduleGlitch(rand(2600, 6200));
+          if (frameRef.current) frameRef.current.classList.remove('is-glitch');
+          scheduleGlitch(rand(3200, 7000));
         }, 560);
       }, delay);
     };
@@ -145,7 +145,7 @@ export default function ImageSwitcher() {
         <span className="ring ring--3"></span>
       </div>
 
-      <div className={`figure-frame ${isGlitching ? 'is-glitch' : ''}`}>
+      <div className="figure-frame" ref={frameRef}>
         <button
           ref={buttonRef}
           className={`figure-switch ${isTransforming ? 'is-transforming' : ''}`}

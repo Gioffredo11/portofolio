@@ -6,7 +6,11 @@ export default function GlobalEffects() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!canvas || reduceMotion) return;
+    const isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (!canvas || reduceMotion || isCoarse) {
+      if (canvas) canvas.style.display = 'none';
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     let w, h, dpr;
@@ -22,21 +26,21 @@ export default function GlobalEffects() {
     const make = () => ({
       x: rand(0, w || window.innerWidth),
       y: rand(0, h || window.innerHeight),
-      r: rand(0.5, 2.1),
-      vx: rand(-0.12, 0.12),
-      vy: rand(-0.32, -0.05), // upward drift
-      a: rand(0.15, 0.6),
-      red: Math.random() < 0.22, // partial red embers
+      r: rand(0.5, 1.8),
+      vx: rand(-0.1, 0.1),
+      vy: rand(-0.28, -0.05), // upward drift
+      a: rand(0.12, 0.5),
+      red: Math.random() < 0.28, // subtle red embers
       life: rand(0, 1),
     });
 
     const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       w = canvas.width = Math.floor(window.innerWidth * dpr);
       h = canvas.height = Math.floor(window.innerHeight * dpr);
       canvas.style.width = window.innerWidth + 'px';
       canvas.style.height = window.innerHeight + 'px';
-      const COUNT = window.innerWidth > 1200 ? 90 : 45;
+      const COUNT = 32; // Lean & lightweight: zero frame drops
       particles = Array.from({ length: COUNT }, make);
     };
 
