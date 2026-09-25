@@ -24,7 +24,7 @@ export default function Contact() {
           <em className="script contact-script">a scene</em>
         </h2>
         <a className="contact-cta" href="mailto:hello@gioffredo.dev" data-hover>
-          <span>GET IN TOUCH</span>
+          <span>START A PROJECT</span>
           <img src="assets/icons/arrow.svg" alt="" width="14" height="14" decoding="async" />
         </a>
       </div>

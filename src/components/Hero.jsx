@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageSwitcher from './ImageSwitcher';
 
-const RIBBON_WORDS = ['IDENTITY', 'CRAFT', 'DESIGN', 'CODE', 'MOTION', 'STORY'];
+const RIBBON_WORDS = ['COMMITS', 'INTERFACES', 'BUGS FIXED', 'CSS WARS', 'SHIP IT', 'LEARNING'];
 
 export default function Hero() {
   const renderRibbonContent = () => {
@@ -36,7 +36,7 @@ export default function Hero() {
         <div className="hero-scan"></div>
       </div>
 
-      {/* Ledakan garis cahaya teal di belakang kata script "the" */}
+      {/* Ledakan garis cahaya teal di belakang kata script "builds." */}
       <div className="hero-burst" aria-hidden="true" data-depth="0.2">
         <i></i>
         <i></i>
@@ -50,10 +50,10 @@ export default function Hero() {
       <div className="hero-type">
         <h1 className="hero-title">
           <span className="line line--1" data-line="1">
-            <span>PORTOFOLIO</span>
+            <span>GIOFFREDO</span>
           </span>
           <span className="line line--2" data-line="2">
-            <em className="script">website's</em>
+            <em className="script">builds.</em>
           </span>
         </h1>
 

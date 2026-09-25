@@ -219,7 +219,7 @@ body.is-loaded .cursor { opacity: 1; }
   font-family: var(--font-d); font-size: 15px; letter-spacing: .06em;
   color: var(--cream);
 }
-.brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); box-shadow: 0 0 16px var(--red), 0 0 4px #fff inset; }
+.brand-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
 
 .nav-links { position: relative; display: flex; gap: clamp(18px, 3vw, 46px); margin: 0 auto; }
 .nav-link {
@@ -927,7 +927,6 @@ body.is-loaded .cursor { opacity: 1; }
   background: var(--red);
   transform: scaleX(0);
   transform-origin: 0 50%;
-  box-shadow: 0 0 8px var(--red);
 }
 
 .archive-desktop-viewport {
