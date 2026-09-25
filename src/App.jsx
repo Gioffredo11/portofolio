@@ -46,6 +46,13 @@ export default function App() {
       gsap.ticker.lagSmoothing(0);
     }
 
+    // Lifecycle handlers
+    let fallbackTimer = null;
+    let onReady = null;
+    let mouseMoveHandler = null;
+    let loadHandler = null;
+    let refreshTimer = null;
+
     // 2. GSAP Animations in a gsap.context for clean lifecycle
     const ctx = gsap.context(() => {
       // Elemen [data-reveal] disembunyikan CSS
@@ -62,9 +69,9 @@ export default function App() {
         .from('.nav, .edge', { opacity: 0, duration: 0.8 }, 0.6)
         .from('.hero-web', { opacity: 0, scale: 1.1, duration: 1.6 }, 0);
 
-      const onReady = () => entranceTl.play();
+      onReady = () => entranceTl.play();
       document.addEventListener('arachne:ready', onReady, { once: true });
-      const fallbackTimer = setTimeout(() => entranceTl.play(), 2500);
+      fallbackTimer = setTimeout(() => entranceTl.play(), 2500);
 
       // Parallax saat hero keluar layar (Desktop vs Mobile via matchMedia)
       ScrollTrigger.matchMedia({
@@ -124,7 +131,6 @@ export default function App() {
         }
       });
 
-      let mouseMoveHandler = null;
       if (hasFinePointer && depthQuickMap.length > 0) {
         let mouseRaf = 0;
         mouseMoveHandler = (e) => {
@@ -361,14 +367,18 @@ export default function App() {
       });
 
       // Refresh ScrollTrigger when images load
-      window.addEventListener('load', () => ScrollTrigger.refresh());
-      setTimeout(() => ScrollTrigger.refresh(), 1000);
+      loadHandler = () => ScrollTrigger.refresh();
+      window.addEventListener('load', loadHandler);
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 1000);
     });
 
     return () => {
       ctx.revert();
-      clearTimeout(fallbackTimer);
-      document.removeEventListener('arachne:ready', onReady);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      if (refreshTimer) clearTimeout(refreshTimer);
+      if (onReady) document.removeEventListener('arachne:ready', onReady);
+      if (mouseMoveHandler) window.removeEventListener('mousemove', mouseMoveHandler);
+      if (loadHandler) window.removeEventListener('load', loadHandler);
       if (tickerCb) gsap.ticker.remove(tickerCb);
       if (lenis) {
         lenis.destroy();
