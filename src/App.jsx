@@ -3,7 +3,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
-import CustomCursor from './components/CustomCursor';
 import GlobalEffects from './components/GlobalEffects';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
@@ -162,18 +161,6 @@ export default function App() {
         ease: 'power3.out',
         scrollTrigger: { trigger: '.fall-title', start: 'top 70%' },
       });
-      gsap.to('.fall .sunburst', {
-        rotate: 18,
-        scale: 1.12,
-        ease: 'none',
-        scrollTrigger: { trigger: '.fall', start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-      gsap.to('.fall-holeshim', {
-        scale: 1.25,
-        opacity: 0.55,
-        ease: 'none',
-        scrollTrigger: { trigger: '.fall', start: 'top center', end: 'bottom top', scrub: true },
-      });
 
       // ARCHIVE (DESKTOP): horizontal scroll track with pin
       const desktopTrack = document.getElementById('archiveTrackDesktop');
@@ -241,27 +228,28 @@ export default function App() {
         ease: 'power3.out',
         scrollTrigger: { trigger: '.statement', start: 'top 82%' },
       });
-      gsap.to('.manifesto-planes span', {
-        rotate: '+=10',
-        yPercent: -12,
-        ease: 'none',
-        scrollTrigger: { trigger: '.manifesto', start: 'top bottom', end: 'bottom top', scrub: true },
-      });
 
       // Statistik counter
       const stats = document.querySelectorAll('.stat');
       stats.forEach((stat) => {
         const num = stat.querySelector('.stat-num');
-        const target = parseInt(num?.dataset.count || num?.textContent || '0', 10);
         if (!num) return;
+        const target = parseInt(num.dataset.count || num.textContent || '0', 10);
+        const plus = num.dataset.plus || '';
         const obj = { v: 0 };
         gsap.to(obj, {
           v: target,
-          duration: 1.6,
+          duration: 1.4,
           ease: 'power2.out',
           scrollTrigger: { trigger: '.stats', start: 'top 88%' },
           onUpdate: () => {
-            num.textContent = String(Math.round(obj.v)).padStart(2, '0');
+            const val = Math.round(obj.v);
+            num.textContent = (val === target && plus)
+              ? `${String(val).padStart(2, '0')}${plus}`
+              : String(val).padStart(2, '0');
+          },
+          onComplete: () => {
+            num.textContent = `${String(target).padStart(2, '0')}${plus}`;
           },
         });
       });
@@ -290,26 +278,15 @@ export default function App() {
         ease: 'power3.out',
         scrollTrigger: { trigger: '.work-list', start: 'top 85%' },
       });
-      gsap.to('.work .sunburst', {
-        rotate: -22,
-        ease: 'none',
-        scrollTrigger: { trigger: '.work', start: 'top bottom', end: 'bottom top', scrub: true },
-      });
 
       // CONTACT
-      gsap.from('.contact-line > span, .contact-script, .contact-cta', {
-        yPercent: 60,
+      gsap.from('.contact-line > span, .contact-script', {
+        y: 24,
         opacity: 0,
-        duration: 1.05,
-        stagger: 0.12,
+        duration: 0.8,
+        stagger: 0.1,
         ease: 'power3.out',
-        scrollTrigger: { trigger: '.contact-inner', start: 'top 85%' },
-      });
-      gsap.to('.contact .sunburst', {
-        rotate: 20,
-        scale: 1.1,
-        ease: 'none',
-        scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom bottom', scrub: true },
+        scrollTrigger: { trigger: '.contact', start: 'top 92%' },
       });
 
       // Generic [data-reveal]
@@ -317,9 +294,8 @@ export default function App() {
       revealElements.forEach((el) => {
         gsap.from(el, {
           opacity: 0,
-          y: 34,
-          filter: 'blur(8px)',
-          duration: 0.95,
+          y: 28,
+          duration: 0.85,
           ease: 'power3.out',
           scrollTrigger: { trigger: el, start: 'top 92%' },
         });
@@ -389,9 +365,6 @@ export default function App() {
 
   return (
     <>
-      {/* Kursor kustom */}
-      <CustomCursor />
-
       {/* Lapisan tekstur & partikel canvas global */}
       <GlobalEffects />
 

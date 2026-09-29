@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const IMG_PETER = 'assets/images/tom holland.jpeg';
-const IMG_SPIDER = 'assets/images/character-spiderman-cut.png';
-const IMG_CHROMA_FALLBACK = 'assets/images/character-peter.jpg';
+const IMG_PETER = '/assets/images/tom holland.jpeg';
+const IMG_SPIDER = '/assets/images/character-spiderman-cut.png';
 
 export default function ImageSwitcher() {
   const [current, setCurrent] = useState(1); // 1 = Peter Parker, 2 = Spider-Man
   const [isTransforming, setIsTransforming] = useState(false);
-  const [hintDismissed, setHintDismissed] = useState(false);
   const [chromaSrc, setChromaSrc] = useState(IMG_PETER);
   const [ghostSrc, setGhostSrc] = useState(IMG_PETER);
 
@@ -17,7 +15,7 @@ export default function ImageSwitcher() {
   const glitchTimerRef = useRef(null);
   const transitionTimerRef = useRef(null);
 
-  // Preload both character images
+  // Preload character images
   useEffect(() => {
     [IMG_PETER, IMG_SPIDER].forEach((src) => {
       const img = new Image();
@@ -27,7 +25,7 @@ export default function ImageSwitcher() {
     });
   }, []);
 
-  // Periodic Glitch (direct DOM class, zero React re-renders)
+  // Periodic subtle comic glitch
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) return;
@@ -40,19 +38,19 @@ export default function ImageSwitcher() {
         document.dispatchEvent(new CustomEvent('arachne:glitch'));
         setTimeout(() => {
           if (frameRef.current) frameRef.current.classList.remove('is-glitch');
-          scheduleGlitch(rand(3200, 7000));
-        }, 560);
+          scheduleGlitch(rand(4500, 9000));
+        }, 480);
       }, delay);
     };
 
-    scheduleGlitch(1800);
+    scheduleGlitch(2400);
 
     return () => {
       if (glitchTimerRef.current) clearTimeout(glitchTimerRef.current);
     };
   }, []);
 
-  // Mouse Parallax for Character
+  // Mouse Parallax for Character (desktop only)
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -79,8 +77,8 @@ export default function ImageSwitcher() {
     const onMouseMove = (e) => {
       const r = hero.getBoundingClientRect();
       if (!r.width || !r.height) return;
-      tx = ((e.clientX - r.left) / r.width - 0.5) * 16;
-      ty = ((e.clientY - r.top) / r.height - 0.5) * 12;
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 12;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 8;
       queue();
     };
 
@@ -104,7 +102,7 @@ export default function ImageSwitcher() {
     if (busyRef.current) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const DURATION = reduceMotion ? 0 : 900;
+    const DURATION = reduceMotion ? 0 : 800;
 
     const outgoingSrc = current === 1 ? IMG_PETER : IMG_SPIDER;
     const incomingSrc = current === 1 ? IMG_SPIDER : IMG_PETER;
@@ -112,10 +110,6 @@ export default function ImageSwitcher() {
 
     busyRef.current = true;
     setChromaSrc(outgoingSrc);
-
-    if (!hintDismissed) {
-      setHintDismissed(true);
-    }
 
     if (DURATION === 0) {
       setCurrent(nextCurrent);
@@ -138,47 +132,49 @@ export default function ImageSwitcher() {
   const nowLabel = current === 1 ? 'Peter Parker' : 'Spider-Man';
 
   return (
-    <div className="hero-figure" id="figure" data-depth="0.3">
-      <div className="figure-rings" aria-hidden="true">
-        <span className="ring ring--1"></span>
-        <span className="ring ring--2"></span>
-        <span className="ring ring--3"></span>
-      </div>
-
+    <div className="hero-figure" id="figure" data-depth="0.18">
+      {/* Editorial Comic Frame */}
       <div className="figure-frame" ref={frameRef}>
+        <div className="figure-corners" aria-hidden="true">
+          <span className="corner corner--tl"></span>
+          <span className="corner corner--tr"></span>
+          <span className="corner corner--bl"></span>
+          <span className="corner corner--br"></span>
+        </div>
+
         <button
           ref={buttonRef}
           className={`figure-switch ${isTransforming ? 'is-transforming' : ''}`}
           id="figureSwitch"
           type="button"
           onClick={handleTransform}
-          aria-label={`Karakter hero : tampilkan versi ${nextLabel} (klik atau tekan Enter)`}
+          aria-label={`Hero character portrait: click to switch to ${nextLabel}`}
         >
-          {/* IMAGE 1 */}
+          {/* IMAGE 1: Peter Parker */}
           <img
             className={`switch-img switch-img--a ${current === 1 ? 'is-active' : ''}`}
             id="switchImgA"
             src={IMG_PETER}
-            alt="Pemuda berjaket membawa buku di koridor sekolah"
+            alt="Peter Parker holding a strawberry in everyday student attire"
             width="736"
-            height="1308"
+            height="1138"
             draggable="false"
             decoding="async"
           />
 
-          {/* IMAGE 2 */}
+          {/* IMAGE 2: Spider-Man */}
           <img
             className={`switch-img switch-img--b ${current === 2 ? 'is-active' : ''}`}
             id="switchImgB"
             src={IMG_SPIDER}
-            alt="Ilustrasi Spider-Man berkostum merah dan hitam"
+            alt="Spider-Man in classic red and black suit"
             width="736"
-            height="1308"
+            height="1138"
             draggable="false"
             decoding="async"
           />
 
-          {/* RGB Chroma Channels */}
+          {/* RGB Chroma Channels for Transformation */}
           <span className="sw-chroma sw-chroma--r" aria-hidden="true">
             <img id="swChromaR" src={chromaSrc} alt="" decoding="async" />
           </span>
@@ -196,25 +192,23 @@ export default function ImageSwitcher() {
             decoding="async"
           />
 
-          {/* Transition Layers */}
-          <span className="sw-noise" aria-hidden="true"></span>
+          {/* Transition Texture Layers */}
           <span className="sw-scan" aria-hidden="true"></span>
-          <span className="sw-sweep" aria-hidden="true"></span>
           <span className="sw-flash" aria-hidden="true"></span>
-          <span className="sw-shock" aria-hidden="true"></span>
         </button>
+
+        {/* Editorial Identity Caption Bar */}
+        <div className="figure-caption">
+          <span className="figure-caption-tag">
+            <i className="status-dot" aria-hidden="true"></i>
+            {nowLabel}
+          </span>
+          <span className="figure-caption-action">CLICK TO SHIFT</span>
+        </div>
       </div>
 
-      <span className="figure-rule" aria-hidden="true"></span>
-      <span
-        className={`figure-hint ${hintDismissed ? 'is-off' : 'is-on'}`}
-        id="figureHint"
-        aria-hidden="true"
-      >
-        TAP OR CLICK TO SHIFT IDENTITY
-      </span>
       <span className="sr-only" id="figureStatus" role="status" aria-live="polite">
-        Menampilkan versi {nowLabel}
+        Showing portrait of {nowLabel}
       </span>
     </div>
   );

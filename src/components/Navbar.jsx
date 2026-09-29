@@ -86,7 +86,7 @@ export default function Navbar() {
           <span className="brand-dot" aria-hidden="true"></span>
         </a>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links (Ordered to match sequential DOM scroll flow) */}
         <nav className="nav-links" aria-label="Navigasi utama">
           <a
             href="#archive"
@@ -97,20 +97,20 @@ export default function Navbar() {
             ARCHIVE<sup>01</sup>
           </a>
           <a
-            href="#work"
-            className="nav-link"
-            data-nav="work"
-            onClick={(e) => handleNavClick(e, '#work')}
-          >
-            STACK<sup>02</sup>
-          </a>
-          <a
             href="#manifesto"
             className="nav-link"
             data-nav="manifesto"
             onClick={(e) => handleNavClick(e, '#manifesto')}
           >
-            STUDIO<sup>03</sup>
+            STUDIO<sup>02</sup>
+          </a>
+          <a
+            href="#work"
+            className="nav-link"
+            data-nav="work"
+            onClick={(e) => handleNavClick(e, '#work')}
+          >
+            STACK<sup>03</sup>
           </a>
           <a
             href="#contact"
@@ -184,22 +184,22 @@ export default function Navbar() {
               <span className="mobile-nav-sub">Interactive Panels</span>
             </a>
             <a
-              href="#work"
-              className="mobile-nav-item"
-              onClick={(e) => handleNavClick(e, '#work')}
-            >
-              <span className="mobile-nav-num">04</span>
-              <span className="mobile-nav-text">TECH STACK</span>
-              <span className="mobile-nav-sub">Tools & Languages</span>
-            </a>
-            <a
               href="#manifesto"
               className="mobile-nav-item"
               onClick={(e) => handleNavClick(e, '#manifesto')}
             >
+              <span className="mobile-nav-num">04</span>
+              <span className="mobile-nav-text">STUDIO &amp; MANIFESTO</span>
+              <span className="mobile-nav-sub">Process &amp; Growth</span>
+            </a>
+            <a
+              href="#work"
+              className="mobile-nav-item"
+              onClick={(e) => handleNavClick(e, '#work')}
+            >
               <span className="mobile-nav-num">05</span>
-              <span className="mobile-nav-text">STUDIO & MANIFESTO</span>
-              <span className="mobile-nav-sub">Process & Growth</span>
+              <span className="mobile-nav-text">TECH STACK</span>
+              <span className="mobile-nav-sub">Tools &amp; Languages</span>
             </a>
             <a
               href="#contact"

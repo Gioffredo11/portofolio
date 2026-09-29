@@ -19,34 +19,27 @@ export default function Hero() {
     return items;
   };
 
+  const handleScrollTo = (e, targetId) => {
+    e.preventDefault();
+    const target = document.querySelector(targetId);
+    if (!target) return;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(target, { offset: -70, duration: 1.4 });
+    } else {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section className="hero" id="hero">
-      {/* Layer background */}
+      {/* Restrained background layer with subtle watermark */}
       <div className="hero-bg" aria-hidden="true">
-        <div className="hero-glow hero-glow--red"></div>
-        <div className="hero-glow hero-glow--teal"></div>
-        <div className="hero-rays" data-depth="0.08"></div>
-        <img className="hero-web hero-web--tl" src="assets/images/web.svg" alt="" decoding="async" />
-        <img className="hero-web hero-web--r" src="assets/images/web.svg" alt="" decoding="async" />
-        <div className="hero-planes" data-depth="0.14">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div className="hero-scan"></div>
+        <div className="hero-grid-lines"></div>
+        <img className="hero-web hero-web--tl" src="/assets/images/web.svg" alt="" decoding="async" />
+        <img className="hero-web hero-web--r" src="/assets/images/web.svg" alt="" decoding="async" />
       </div>
 
-      {/* Ledakan garis cahaya teal di belakang kata script "builds." */}
-      <div className="hero-burst" aria-hidden="true" data-depth="0.2">
-        <i></i>
-        <i></i>
-        <i></i>
-      </div>
-
-      {/* Karakter hero */}
-      <ImageSwitcher />
-
-      {/* Judul besar + perkenalan singkat */}
+      {/* Main hero typography & personal introduction */}
       <div className="hero-type">
         <h1 className="hero-title">
           <span className="line line--1" data-line="1">
@@ -59,32 +52,41 @@ export default function Hero() {
 
         <div className="hero-meta">
           <div className="hero-intro">
-            <span className="hero-intro-kicker">FIELD DISPATCH : 2026</span>
-            <span className="hero-intro-name">Gioffredo Ho</span>
-
-            <p className="hero-intro-tag">Student developer exploring interfaces, code architectures, and digital craft.</p>
-
-            <p>
-              Hello, I am Gioffredo Ho. A student focused on programming, software fundamentals,
-              and interactive digital development.
+            <span className="hero-intro-kicker">FIELD DISPATCH // 2026</span>
+            <p className="hero-intro-tag">
+              Student developer exploring interface architecture, creative frontend, and software craft.
+            </p>
+            <p className="hero-intro-body">
+              Building responsive web applications, turning experimental ideas into functional code, and documenting the learning process in public.
             </p>
 
-            <p>
-              I spend my time testing ideas, building responsive applications, and turning
-              experimental concepts into functional software.
-            </p>
-
-            <p>
-              This portfolio documents my progress: a collection of codebases, tools,
-              experiments, and daily learning.
-            </p>
-
-            <p>Every project is an opportunity to break assumptions, understand the stack, and ship better code.</p>
+            <div className="hero-actions">
+              <a
+                href="#archive"
+                className="hero-btn hero-btn--primary"
+                onClick={(e) => handleScrollTo(e, '#archive')}
+                aria-label="Explore archive section"
+              >
+                <span>EXPLORE ARCHIVE</span>
+                <img src="/assets/icons/arrow.svg" alt="" width="11" height="11" decoding="async" />
+              </a>
+              <a
+                href="#contact"
+                className="hero-btn hero-btn--ghost"
+                onClick={(e) => handleScrollTo(e, '#contact')}
+                aria-label="Jump to contact section"
+              >
+                <span>GET IN TOUCH</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Pita marquee merah (caution tape) */}
+      {/* Interactive character portrait switcher */}
+      <ImageSwitcher />
+
+      {/* Red caution tape marquee */}
       <div className="ribbon" id="ribbon" aria-hidden="true">
         <div className="ribbon-track">
           <span className="ribbon-row" data-row="a">

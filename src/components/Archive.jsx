@@ -213,7 +213,7 @@ export default function Archive() {
       <div className="archive-desktop" ref={desktopSectionRef}>
         <div className="archive-desktop-header">
           <p className="label">
-            <span>01.1</span>
+            <span>02</span>
             <i></i>ARCHIVE
           </p>
           <div className="archive-desktop-meta">
@@ -251,11 +251,11 @@ export default function Archive() {
       <div className="archive-mobile">
         <div className="archive-mobile-header">
           <p className="label">
-            <span>01.1</span>
+            <span>02</span>
             <i></i>ARCHIVE
           </p>
           <span className="archive-mobile-hint">
-            SWIPE TO EXPLORE ({activeMobileIdx + 1}/{PANELS.length}) →
+            SWIPE TO BROWSE ({activeMobileIdx + 1}/{PANELS.length}) →
           </span>
         </div>
 
@@ -271,7 +271,7 @@ export default function Archive() {
               className={`mobile-panel ${activeMobileIdx === idx ? 'is-active' : ''}`}
               key={idx}
             >
-              <div className="mobile-panel-top">
+              <div className="mobile-panel-header">
                 <span className="mobile-panel-badge">{panel.idx}</span>
                 <span className="mobile-panel-tag">{panel.tag}</span>
               </div>
@@ -285,13 +285,27 @@ export default function Archive() {
           ))}
         </div>
 
-        {/* Mobile pagination indicator dots */}
-        <div className="archive-mobile-dots" aria-hidden="true">
-          {PANELS.map((_, idx) => (
-            <span
+        {/* Mobile pagination indicator buttons (Accessible & clickable) */}
+        <div className="archive-mobile-dots" role="tablist" aria-label="Navigasi panel komik">
+          {PANELS.map((p, idx) => (
+            <button
               key={idx}
-              className={`archive-dot ${activeMobileIdx === idx ? 'is-active' : ''}`}
-            />
+              type="button"
+              role="tab"
+              aria-selected={activeMobileIdx === idx}
+              aria-label={`Buka ${p.idx}`}
+              className={`archive-dot-btn ${activeMobileIdx === idx ? 'is-active' : ''}`}
+              onClick={() => {
+                const track = mobileTrackRef.current;
+                if (!track) return;
+                const card = track.querySelectorAll('.mobile-panel')[idx];
+                if (card) {
+                  card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
+              }}
+            >
+              <span className="archive-dot-inner" />
+            </button>
           ))}
         </div>
       </div>

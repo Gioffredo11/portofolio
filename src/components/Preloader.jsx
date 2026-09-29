@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -10,29 +11,37 @@ export default function Preloader() {
     const rand = (min, max) => min + Math.random() * (max - min);
 
     const tick = () => {
-      current = Math.min(100, current + rand(6, 18));
+      current = Math.min(100, current + rand(8, 20));
       setProgress(Math.round(current));
 
       if (current < 100) {
-        timerRef.current = setTimeout(tick, rand(50, 130));
+        timerRef.current = setTimeout(tick, rand(40, 90));
       } else {
         timerRef.current = setTimeout(() => {
           setIsDone(true);
           document.body.classList.add('is-loaded');
           document.dispatchEvent(new CustomEvent('arachne:ready'));
-        }, 220);
+          setTimeout(() => setIsMounted(false), 450);
+        }, 150);
       }
     };
 
-    timerRef.current = setTimeout(tick, 180);
+    timerRef.current = setTimeout(tick, 100);
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, []);
 
+  if (!isMounted) return null;
+
   return (
-    <div className={`loader ${isDone ? 'is-done' : ''}`} id="loader" aria-hidden="true">
+    <div
+      className={`loader ${isDone ? 'is-done' : ''}`}
+      id="loader"
+      aria-hidden="true"
+      style={isDone ? { opacity: 0, visibility: 'hidden', display: 'none', pointerEvents: 'none' } : undefined}
+    >
       <div className="loader-mark">
         <span className="loader-word">GIOFFREDO HO</span>
         <span className="loader-dot"></span>
